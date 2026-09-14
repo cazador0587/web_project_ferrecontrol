@@ -110,8 +110,114 @@ const getProductById = async (req, res) => {
   }
 };
 
+// Actualizar producto
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const {
+      name,
+      description,
+      sku,
+      price,
+      stock,
+      minStock,
+      image,
+      category,
+    } = req.body;
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Producto no encontrado",
+      });
+    }
+
+    if (sku && sku.toUpperCase() !== product.sku) {
+      const existingProduct = await Product.findOne({
+        sku: sku.toUpperCase(),
+        _id: { $ne: id },
+      });
+
+      if (existingProduct) {
+        return res.status(409).json({
+          message: "El SKU ya está registrado",
+        });
+      }
+    }
+
+    if (category && category.toString() !== product.category.toString()) {
+      const existingCategory = await Category.findById(category);
+
+      if (!existingCategory) {
+        return res.status(404).json({
+          message: "La categoría no existe",
+        });
+      }
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        name,
+        description,
+        sku,
+        price,
+        stock,
+        minStock,
+        image,
+        category,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).populate("category", "name description");
+
+    return res.status(200).json({
+      message: "Producto actualizado correctamente",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    console.error("Error al actualizar producto:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
+// Eliminar producto
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Producto no encontrado",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Producto eliminado correctamente",
+      product,
+    });
+  } catch (error) {
+    console.error("Error al eliminar producto:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   getProducts,
   getProductById,
+  updateProduct,
+  deleteProduct,
 };
