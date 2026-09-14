@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const connectDatabase = require("./config/database");
 const authRoutes = require("./routes/auth.routes");
+const categoryRoutes = require("./routes/category.routes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ connectDatabase();
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
