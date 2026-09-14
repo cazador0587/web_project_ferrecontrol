@@ -82,7 +82,36 @@ const getProducts = async (req, res) => {
   }
 };
 
+// Obtener un producto por ID
+const getProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findById(id).populate(
+      "category",
+      "name description"
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Producto no encontrado",
+      });
+    }
+
+    return res.status(200).json({
+      product,
+    });
+  } catch (error) {
+    console.error("Error al obtener producto:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   getProducts,
+  getProductById,
 };
