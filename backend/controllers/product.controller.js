@@ -63,10 +63,47 @@ const createProduct = async (req, res) => {
   }
 };
 
-// Obtener todos los productos
+// Obtener productos con búsqueda
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find()
+    const { search, category, minPrice, maxPrice } = req.query;
+
+    const filter = {};
+    
+    if (search) {
+      filter.$or = [
+        {
+          name: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          sku: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ];
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      filter.price = {};
+
+      if (minPrice !== undefined) {
+        filter.price.$gte = Number(minPrice);
+      }
+
+      if (maxPrice !== undefined) {
+        filter.price.$lte = Number(maxPrice);
+      }
+    }
+
+    const products = await Product.find(filter)
       .populate("category", "name description")
       .sort({ createdAt: -1 });
 
