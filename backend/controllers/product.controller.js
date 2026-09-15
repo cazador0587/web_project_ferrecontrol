@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const mongoose = require("mongoose");
 
 // Crear producto
 const createProduct = async (req, res) => {
@@ -68,8 +69,50 @@ const getProducts = async (req, res) => {
   try {
     const { search, category, minPrice, maxPrice } = req.query;
 
+    // Validar precios
+    if (minPrice !== undefined && Number.isNaN(Number(minPrice))) {
+      return res.status(400).json({
+        message: "El precio mínimo debe ser un número válido",
+      });
+    }
+
+    if (maxPrice !== undefined && Number.isNaN(Number(maxPrice))) {
+      return res.status(400).json({
+        message: "El precio máximo debe ser un número válido",
+      });
+    }
+
+    if (minPrice !== undefined && Number(minPrice) < 0) {
+      return res.status(400).json({
+        message: "El precio mínimo no puede ser negativo",
+      });
+    }
+
+    if (maxPrice !== undefined && Number(maxPrice) < 0) {
+      return res.status(400).json({
+        message: "El precio máximo no puede ser negativo",
+      });
+    }
+
+    if (
+      minPrice !== undefined &&
+      maxPrice !== undefined &&
+      Number(minPrice) > Number(maxPrice)
+    ) {
+      return res.status(400).json({
+        message: "El precio mínimo no puede ser mayor que el precio máximo",
+      });
+    }
+
+    // Validar categoría
+    if (category && !mongoose.isValidObjectId(category)) {
+      return res.status(400).json({
+        message: "El ID de categoría no es válido",
+      });
+    }
+
     const filter = {};
-    
+
     if (search) {
       filter.$or = [
         {
