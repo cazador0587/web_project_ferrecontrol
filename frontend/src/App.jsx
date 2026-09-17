@@ -1,26 +1,33 @@
-import { useEffect, useState } from "react";
-import { api } from "./services/api";
+import { useContext } from "react";
+import Login from "./pages/Login";
+import { AuthContext } from "./contexts/AuthContext";
 
 function App() {
-  const [message, setMessage] = useState("Conectando con FerreControl...");
-  const [error, setError] = useState("");
+  const { user, isLoading, logout } = useContext(AuthContext);
 
-  useEffect(() => {
-    api
-        .get("/health")
-        .then((data) => {
-          setMessage(data.message);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-  }, []);
+  if (isLoading) {
+    return <p>Cargando sesión...</p>;
+  }
+
+  if (!user) {
+    return <Login />;
+  }
 
   return (
     <main>
-      <h1>FerreControl</h1>
+      <h1>Bienvenido a FerreControl</h1>
 
-      {error ? <p>Error: {error}</p> : <p>{message}</p>}
+      <p>
+        Usuario: {user.name} {user.lastname}
+      </p>
+
+      <p>Correo: {user.email}</p>
+
+      <p>Rol: {user.role}</p>
+
+      <button type="button" onClick={logout}>
+        Cerrar sesión
+      </button>
     </main>
   );
 }
