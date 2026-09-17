@@ -32,6 +32,12 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    message: "FerreControl API funcionando correctamente",
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`FerreControl API ejecutándose en http://localhost:${PORT}`);
