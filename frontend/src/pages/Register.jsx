@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { auth } from "../services/auth";
 
-const Login = () => {
-  const { login } = useContext(AuthContext);
+const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    name: "",
+    lastname: "",
     email: "",
     password: "",
   });
@@ -30,13 +31,8 @@ const Login = () => {
     setIsSubmitting(true);
 
     try {
-      const data = await login(formData);
-
-      if (data.user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      await auth.register(formData);
+      navigate("/login");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,12 +42,35 @@ const Login = () => {
 
   return (
     <main>
-      <h1>Iniciar sesión</h1>
+      <h1>Crear cuenta</h1>
 
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Correo electrónico</label>
+          <label htmlFor="name">Nombre</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
+        <div>
+          <label htmlFor="lastname">Apellidos</label>
+          <input
+            id="lastname"
+            name="lastname"
+            type="text"
+            value={formData.lastname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email">Correo electrónico</label>
           <input
             id="email"
             name="email"
@@ -64,13 +83,13 @@ const Login = () => {
 
         <div>
           <label htmlFor="password">Contraseña</label>
-
           <input
             id="password"
             name="password"
             type="password"
             value={formData.password}
             onChange={handleChange}
+            minLength="8"
             required
           />
         </div>
@@ -78,11 +97,11 @@ const Login = () => {
         {error && <p>{error}</p>}
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
+          {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </form>
     </main>
   );
 };
 
-export default Login;
+export default Register;
