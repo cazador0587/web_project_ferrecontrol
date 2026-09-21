@@ -143,8 +143,25 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const getUserCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments();
+
+    return res.status(200).json({
+      count,
+    });
+  } catch (error) {
+    console.error("Error al obtener la cantidad de usuarios:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getCurrentUser,
+  getUserCount,
 };

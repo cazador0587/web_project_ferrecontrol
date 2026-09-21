@@ -12,4 +12,8 @@ export const auth = {
   getCurrentUser: () => {
     return api.get("/auth/me");
   },
+
+  getUserCount: () => {
+    return api.get("/auth/admin/user-count");
+  },
 };
