@@ -111,7 +111,9 @@ const getProducts = async (req, res) => {
       });
     }
 
-    const filter = {};
+    const filter = {
+      isActive: { $ne: false },
+    };
 
     if (search) {
       filter.$or = [
@@ -271,9 +273,14 @@ const updateProduct = async (req, res) => {
 // Eliminar producto
 const deleteProduct = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const product = await Product.findByIdAndDelete(id);
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { isActive: false },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     if (!product) {
       return res.status(404).json({
@@ -281,15 +288,14 @@ const deleteProduct = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      message: "Producto eliminado correctamente",
+    res.json({
+      message: "Producto desactivado correctamente",
       product,
     });
   } catch (error) {
-    console.error("Error al eliminar producto:", error);
-
-    return res.status(500).json({
-      message: "Error interno del servidor",
+    res.status(500).json({
+      message: "Error al desactivar el producto",
+      error: error.message,
     });
   }
 };

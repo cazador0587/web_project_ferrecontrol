@@ -12,6 +12,10 @@ import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import OrderConfirmation from "../pages/OrderConfirmation";
 import MyOrders from "../pages/MyOrders";
+import AdminDashboard from "../pages/AdminDashboard";
+import AdminProducts from "../pages/AdminProducts";
+import AdminProductCreate from "../pages/AdminProductCreate";
+import AdminProductEdit from "../pages/AdminProductEdit";
 
 const AppRouter = () => {
   return (
@@ -97,7 +101,40 @@ const AppRouter = () => {
           element={
             <AdminRoute>
               <AdminLayout>
-                <h1>Dashboard administrativo</h1>
+                <AdminDashboard />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/productos"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminProducts />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/productos/nuevo"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminProductCreate />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/productos/:id/editar"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminProductEdit />
               </AdminLayout>
             </AdminRoute>
           }

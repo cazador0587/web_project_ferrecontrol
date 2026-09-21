@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 const AdminLayout = ({ children }) => {
@@ -20,6 +20,14 @@ const AdminLayout = ({ children }) => {
         <p>
           {user?.name} {user?.lastname}
         </p>
+
+        <nav>
+          <Link to="/admin">Dashboard</Link>
+          {" | "}
+          <Link to="/admin/productos">Productos</Link>
+          {" | "}
+          <Link to="/admin/productos/nuevo">Crear Producto</Link>
+        </nav>
 
         <button type="button" onClick={handleLogout}>
           Cerrar sesión
