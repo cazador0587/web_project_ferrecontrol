@@ -48,7 +48,7 @@ const MyOrders = () => {
           <h3>Productos</h3>
 
           {order.items.map((item) => (
-            <div key={`${order._id}-${item.product}`}>
+            <div key={`${order._id}-${item.sku}`}>
               <p>{item.name}</p>
               <p>SKU: {item.sku}</p>
               <p>Precio: ${item.price}</p>

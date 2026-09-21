@@ -21,7 +21,7 @@ router.get(
 );
 
 // Obtener todos los pedidos (solo para administradores)
-router.get("/admin/all", adminMiddleware, adminMiddleware, getAllOrders);
+router.get("/admin/all", authMiddleware, adminMiddleware, getAllOrders);
 
 // Actualizar estado de un pedido — solo administradores
 router.patch(
