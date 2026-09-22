@@ -41,9 +41,14 @@ const AdminProducts = () => {
     }
   };
 
+  const lowStockProducts = productList.filter(
+    (product) => product.stock <= product.minStock,
+  );
+
   return (
     <section>
       <h1>Administrar productos</h1>
+      <p>Productos con stock bajo: {lowStockProducts.length}</p>
 
       {productList.length === 0 ? (
         <p>No hay productos registrados.</p>
@@ -56,6 +61,9 @@ const AdminProducts = () => {
             <p>Precio: ${product.price}</p>
             <p>Stock: {product.stock}</p>
             <p>Stock mínimo: {product.minStock}</p>
+            {product.stock <= product.minStock && (
+              <p>⚠ Stock bajo — requiere reposición</p>
+            )}
 
             <Link to={`/admin/productos/${product._id}/editar`}>Editar</Link>
 
