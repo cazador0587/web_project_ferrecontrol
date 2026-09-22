@@ -16,4 +16,12 @@ export const auth = {
   getUserCount: () => {
     return api.get("/auth/admin/user-count");
   },
+
+  getUsers: () => {
+    return api.get("/auth/admin/users");
+  },
+
+  updateUserRole: (id, role) => {
+    return api.patch(`/auth/admin/users/${id}/role`, { role });
+  },
 };

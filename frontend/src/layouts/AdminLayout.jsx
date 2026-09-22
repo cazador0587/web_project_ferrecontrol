@@ -30,8 +30,9 @@ const AdminLayout = ({ children }) => {
           {" | "}
           <Link to="/admin/pedidos">Pedidos</Link>
           {" | "}
-          <Link to="/admin/categorias">Categorías</Link>
+          <Link to="/admin/usuarios">Usuarios</Link>
           {" | "}
+          <Link to="/admin/categorias">Categorías</Link>
         </nav>
 
         <button type="button" onClick={handleLogout}>

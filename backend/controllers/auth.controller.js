@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const User = require("../models/User");
 
 const register = async (req, res) => {
@@ -159,9 +158,72 @@ const getUserCount = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      users,
+    });
+  } catch (error) {
+    console.error("Error al obtener los usuarios:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
+const updateUserRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    if (id === req.user.id) {
+      return res.status(400).json({
+        message: "No puedes modificar tu propio rol",
+      });
+    }
+
+    if (!["client", "admin"].includes(role)) {
+      return res.status(400).json({
+        message: "Rol de usuario no válido",
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { role },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuario no encontrado",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Rol de usuario actualizado correctamente",
+      user,
+    });
+  } catch (error) {
+    console.error("Error al actualizar el rol del usuario:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getCurrentUser,
   getUserCount,
+  getUsers,
+  updateUserRole,
 };

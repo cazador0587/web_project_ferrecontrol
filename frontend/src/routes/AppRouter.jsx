@@ -18,6 +18,7 @@ import AdminProductCreate from "../pages/AdminProductCreate";
 import AdminProductEdit from "../pages/AdminProductEdit";
 import AdminOrders from "../pages/AdminOrders";
 import AdminCategories from "../pages/AdminCategories";
+import AdminUsers from "../pages/AdminUsers";
 
 const AppRouter = () => {
   return (
@@ -159,6 +160,17 @@ const AppRouter = () => {
             <AdminRoute>
               <AdminLayout>
                 <AdminCategories />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/usuarios"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminUsers />
               </AdminLayout>
             </AdminRoute>
           }

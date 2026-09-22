@@ -5,6 +5,8 @@ const {
   login,
   getCurrentUser,
   getUserCount,
+  getUsers,
+  updateUserRole,
 } = require("../controllers/auth.controller");
 
 const authMiddleware = require("../middlewares/auth.middleware");
@@ -16,7 +18,13 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/me", authMiddleware, getCurrentUser);
 router.get("/admin/user-count", authMiddleware, adminMiddleware, getUserCount);
-
+router.get("/admin/users", authMiddleware, adminMiddleware, getUsers);
+router.patch(
+  "/admin/users/:id/role",
+  authMiddleware,
+  adminMiddleware,
+  updateUserRole,
+);
 router.get("/admin-test", authMiddleware, adminMiddleware, (req, res) => {
   res.status(200).json({
     message: "Acceso de administrador autorizado",
