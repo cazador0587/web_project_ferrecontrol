@@ -56,18 +56,29 @@ const ProductDetail = () => {
   };
 
   return (
-    <section>
-      <h1>{product.name}</h1>
+    <section className="product-detail">
+      <h1 className="product-detail__title">{product.name}</h1>
 
-      <p>{product.description}</p>
+      <p className="product-detail__description">{product.description}</p>
 
-      <p>SKU: {product.sku}</p>
+      <p className="product-detail__sku">SKU: {product.sku}</p>
 
-      <p>Precio: ${product.price}</p>
+      <p className="product-detail__price">Precio: ${product.price}</p>
 
-      <p>Stock disponible: {product.stock}</p>
+      <p
+        className={`product-detail__stock ${
+          product.stock === 0
+            ? "product-detail__stock--out"
+            : product.stock <= 5
+              ? "product-detail__stock--low"
+              : ""
+        }`}
+      >
+        Stock disponible: {product.stock}
+      </p>
 
       <button
+        className="product-detail__button"
         type="button"
         onClick={handleAddToCart}
         disabled={isAdding || product.stock === 0}
@@ -75,7 +86,7 @@ const ProductDetail = () => {
         {isAdding ? "Agregando..." : "Agregar al carrito"}
       </button>
 
-      {cartMessage && <p>{cartMessage}</p>}
+      {cartMessage && <p className="product-detail__message">{cartMessage}</p>}
     </section>
   );
 };

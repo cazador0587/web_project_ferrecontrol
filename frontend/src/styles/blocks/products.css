@@ -1,0 +1,118 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.products__title {
+  max-width: 700px;
+  color: var(--color-heading);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.products__description {
+  max-width: 650px;
+  color: var(--color-muted);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.products__filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.products__search {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.5;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.products__search::placeholder {
+  color: var(--color-muted);
+}
+
+.products__search:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.products__select {
+  min-height: 48px;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.products__select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.products__results {
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.products__empty {
+  width: 100%;
+  padding: 32px 24px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {  
+  .products__filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .products__search {
+    width: 100%;
+  }
+
+  .products__title {
+    font-size: 32px;
+  }
+
+  .products__description {
+    font-size: 16px;
+  }
+}

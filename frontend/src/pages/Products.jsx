@@ -54,35 +54,51 @@ const Products = () => {
   }
 
   return (
-    <section>
-      <h1>Catálogo de productos</h1>
+    <section className="products">
+      <h1 className="products__title">Catálogo de productos</h1>
 
-      <p>Explora nuestro catálogo de herramientas, materiales y accesorios.</p>
+      <p className="products__description">
+        Explora nuestro catálogo de herramientas, materiales y accesorios.
+      </p>
+      <div className="products__filters">
+        <input
+          className="products__search"
+          type="search"
+          aria-label="Buscar productos"
+          placeholder="Buscar producto..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
 
-      <input
-        type="search"
-        placeholder="Buscar producto..."
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-      />
+        <select
+          className="products__select"
+          aria-label="Filtrar por categoría"
+          value={selectedCategory}
+          onChange={(event) => setSelectedCategory(event.target.value)}
+        >
+          <option value="">Todas las categorías</option>
 
-      <select
-        value={selectedCategory}
-        onChange={(event) => setSelectedCategory(event.target.value)}
-      >
-        <option value="">Todas las categorías</option>
+          {categoryList.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        {categoryList.map((category) => (
-          <option key={category._id} value={category._id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
+      {filteredProducts.length > 0 && (
+        <p className="products__results">
+          {filteredProducts.length}{" "}
+          {filteredProducts.length === 1
+            ? "producto encontrado"
+            : "productos encontrados"}
+        </p>
+      )}
 
       {productList.length === 0 ? (
-        <p>No hay productos disponibles.</p>
+        <p className="products__empty">No hay productos disponibles.</p>
       ) : filteredProducts.length === 0 ? (
-        <p>No se encontraron productos.</p>
+        <p className="products__empty">No se encontraron productos.</p>
       ) : (
         <ProductGrid products={filteredProducts} />
       )}

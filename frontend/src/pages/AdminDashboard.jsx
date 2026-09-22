@@ -58,7 +58,7 @@ const AdminDashboard = () => {
     <section>
       <h1>Panel administrativo</h1>
 
-      <p>
+      <p className="home__description">
         Administra los productos, inventario, pedidos y usuarios de
         FerreControl.
       </p>
