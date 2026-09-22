@@ -1,4 +1,5 @@
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 
 // Crear categoría
 const createCategory = async (req, res) => {
@@ -112,6 +113,17 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const productsUsingCategory = await Product.countDocuments({
+      category: id,
+    });
+
+    if (productsUsingCategory > 0) {
+      return res.status(409).json({
+        message:
+          "No se puede eliminar la categoría porque tiene productos asociados",
+      });
+    }
 
     const category = await Category.findByIdAndDelete(id);
 

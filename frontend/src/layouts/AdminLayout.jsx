@@ -29,6 +29,9 @@ const AdminLayout = ({ children }) => {
           <Link to="/admin/productos/nuevo">Crear Producto</Link>
           {" | "}
           <Link to="/admin/pedidos">Pedidos</Link>
+          {" | "}
+          <Link to="/admin/categorias">Categorías</Link>
+          {" | "}
         </nav>
 
         <button type="button" onClick={handleLogout}>

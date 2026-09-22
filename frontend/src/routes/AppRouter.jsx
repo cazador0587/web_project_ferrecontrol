@@ -17,6 +17,7 @@ import AdminProducts from "../pages/AdminProducts";
 import AdminProductCreate from "../pages/AdminProductCreate";
 import AdminProductEdit from "../pages/AdminProductEdit";
 import AdminOrders from "../pages/AdminOrders";
+import AdminCategories from "../pages/AdminCategories";
 
 const AppRouter = () => {
   return (
@@ -147,6 +148,17 @@ const AppRouter = () => {
             <AdminRoute>
               <AdminLayout>
                 <AdminOrders />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/categorias"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminCategories />
               </AdminLayout>
             </AdminRoute>
           }
