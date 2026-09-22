@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { products } from "../services/products";
 import ProductGrid from "../components/ProductGrid";
+import { categories } from "../services/categories";
 
 const Products = () => {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     products
@@ -19,7 +23,27 @@ const Products = () => {
       .finally(() => {
         setIsLoading(false);
       });
+    
+    categories
+      .getAll()
+      .then((data) => {
+        setCategoryList(data.categories);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   }, []);
+
+  const filteredProducts = productList.filter((product) => {
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "" || product.category?._id === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   if (isLoading) {
     return <p>Cargando productos...</p>;
@@ -35,10 +59,32 @@ const Products = () => {
 
       <p>Explora nuestro catálogo de herramientas, materiales y accesorios.</p>
 
+      <input
+        type="search"
+        placeholder="Buscar producto..."
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
+
+      <select
+        value={selectedCategory}
+        onChange={(event) => setSelectedCategory(event.target.value)}
+      >
+        <option value="">Todas las categorías</option>
+
+        {categoryList.map((category) => (
+          <option key={category._id} value={category._id}>
+            {category.name}
+          </option>
+        ))}
+      </select>
+
       {productList.length === 0 ? (
         <p>No hay productos disponibles.</p>
+      ) : filteredProducts.length === 0 ? (
+        <p>No se encontraron productos.</p>
       ) : (
-        <ProductGrid products={productList} />
+        <ProductGrid products={filteredProducts} />
       )}
     </section>
   );
