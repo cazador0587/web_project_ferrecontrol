@@ -19,6 +19,7 @@ import AdminProductEdit from "../pages/AdminProductEdit";
 import AdminOrders from "../pages/AdminOrders";
 import AdminCategories from "../pages/AdminCategories";
 import AdminUsers from "../pages/AdminUsers";
+import Profile from "../pages/Profile";
 
 const AppRouter = () => {
   return (
@@ -58,7 +59,7 @@ const AppRouter = () => {
           element={
             <ProtectedRoute>
               <ClientLayout>
-                <h1>Perfil de usuario</h1>
+                <Profile />
               </ClientLayout>
             </ProtectedRoute>
           }

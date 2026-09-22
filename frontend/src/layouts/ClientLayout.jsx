@@ -24,6 +24,8 @@ const ClientLayout = ({ children }) => {
           <Link to="/carrito">Carrito</Link>
           {" | "}
           <Link to="/mis-pedidos">Mis pedidos</Link>
+          {" | "}
+          <Link to="/perfil">Mi perfil</Link>
         </nav>
 
         <button type="button" onClick={handleLogout}>
