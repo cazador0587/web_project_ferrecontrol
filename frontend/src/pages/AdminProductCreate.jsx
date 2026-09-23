@@ -7,6 +7,7 @@ const AdminProductCreate = () => {
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -33,6 +34,7 @@ const AdminProductCreate = () => {
 
     try {
       setError("");
+      setIsSubmitting(true);
 
       const productData = {
         ...formData,
@@ -46,6 +48,8 @@ const AdminProductCreate = () => {
       navigate("/admin/productos");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -181,7 +185,9 @@ const AdminProductCreate = () => {
           </select>
         </div>
 
-        <button type="submit">Crear producto</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Creando producto..." : "Crear producto"}
+        </button>
       </form>
     </section>
   );
