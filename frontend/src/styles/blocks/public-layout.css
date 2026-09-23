@@ -69,34 +69,12 @@
   font-weight: 600;
 }
 
-.public-layout__footer {
-  padding: 24px var(--page-padding);
-  background-color: var(--color-secondary);
-  text-align: center;
-}
-
-.public-layout__footer-text {
-  color: var(--color-surface);
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.public-layout__footer-content {
-  width: 100%;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
-
 @media screen and (max-width: 768px) {
   .public-layout__main {
     padding: var(--section-spacing-mobile) var(--page-padding-mobile);
   }
 
   .public-layout__header {
-    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
-  }
-
-  .public-layout__footer {
     padding: var(--section-spacing-mobile) var(--page-padding-mobile);
   }
 

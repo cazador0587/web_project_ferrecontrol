@@ -109,26 +109,6 @@
   padding: var(--section-spacing) var(--page-padding);
 }
 
-.admin-layout__footer {
-  padding: 24px var(--page-padding);
-  background-color: var(--color-secondary);
-}
-
-.admin-layout__footer-content {
-  width: 100%;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
-
-.admin-layout__footer-text {
-  margin: 0;
-  color: var(--color-surface);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
-  text-align: center;
-}
-
 @media screen and (max-width: 768px) {
   .admin-layout__header {
     padding: var(--section-spacing-mobile) var(--page-padding-mobile);
@@ -136,10 +116,6 @@
 
   .admin-layout__main {
     padding: var(--section-spacing-mobile) var(--page-padding-mobile);
-  }
-
-  .admin-layout__footer {
-    padding: 24px var(--page-padding-mobile);
   }
 
   .admin-layout__nav {
