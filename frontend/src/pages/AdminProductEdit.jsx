@@ -8,6 +8,7 @@ const AdminProductEdit = () => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [categoryList, setCategoryList] = useState([]);
 
@@ -36,6 +37,7 @@ const AdminProductEdit = () => {
 
     try {
       setError("");
+      setIsSubmitting(true);
 
       const productData = {
         ...formData,
@@ -49,6 +51,8 @@ const AdminProductEdit = () => {
       navigate("/admin/productos");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -140,7 +144,7 @@ const AdminProductEdit = () => {
             onChange={handleChange}
           />
         </div>
-        
+
         <div>
           <label htmlFor="stock">Stock</label>
           <input
@@ -194,7 +198,9 @@ const AdminProductEdit = () => {
             ))}
           </select>
         </div>
-        <button type="submit">Guardar cambios</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Guardando cambios..." : "Guardar cambios"}
+        </button>
       </form>
     </section>
   );
