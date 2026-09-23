@@ -6,6 +6,7 @@ const AdminProducts = () => {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     products
@@ -31,6 +32,7 @@ const AdminProducts = () => {
 
   const handleDelete = async (id) => {
     try {
+      setDeletingId(id);
       await products.remove(id);
 
       setProductList((currentProducts) =>
@@ -38,6 +40,8 @@ const AdminProducts = () => {
       );
     } catch (err) {
       setError(err.message);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -67,8 +71,12 @@ const AdminProducts = () => {
 
             <Link to={`/admin/productos/${product._id}/editar`}>Editar</Link>
 
-            <button type="button" onClick={() => handleDelete(product._id)}>
-              Desactivar
+            <button
+              type="button"
+              onClick={() => handleDelete(product._id)}
+              disabled={deletingId === product._id}
+            >
+              {deletingId === product._id ? "Desactivando..." : "Desactivar"}
             </button>
           </article>
         ))
