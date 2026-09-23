@@ -4,15 +4,16 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 const request = async (endpoint, options = {}) => {
   const token = getToken();
+  const { headers, ...restOptions } = options;
 
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers || {}),
-    },
-    ...options,
-  });
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...restOptions,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(headers || {}),
+      },
+    });
 
   const data = await response.json();
 
