@@ -4,6 +4,7 @@ import { auth } from "../services/auth";
 const AdminUsers = () => {
   const [userList, setUserList] = useState([]);
   const [error, setError] = useState("");
+  const [updatingUserId, setUpdatingUserId] = useState(null);
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -21,6 +22,7 @@ const AdminUsers = () => {
   const handleRoleChange = async (id, role) => {
     try {
       setError("");
+      setUpdatingUserId(id);
 
       const data = await auth.updateUserRole(id, role);
 
@@ -29,6 +31,8 @@ const AdminUsers = () => {
       );
     } catch (error) {
       setError(error.message);
+    } finally {
+      setUpdatingUserId(null);
     }
   };
 
@@ -48,6 +52,7 @@ const AdminUsers = () => {
           <select
             value={user.role}
             onChange={(event) => handleRoleChange(user._id, event.target.value)}
+            disabled={updatingUserId === user._id}
           >
             <option value="client">Cliente</option>
             <option value="admin">Administrador</option>
