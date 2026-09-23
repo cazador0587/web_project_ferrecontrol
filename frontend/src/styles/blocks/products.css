@@ -55,7 +55,7 @@
 
 .products__search:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
 }
 
 .products__select {
@@ -76,7 +76,7 @@
 
 .products__select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
 }
 
 .products__results {

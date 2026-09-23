@@ -1,6 +1,7 @@
 :root {
   --color-primary: #f59e0b;
   --color-primary-dark: #d97706;
+  --color-primary-focus: rgba(245, 158, 11, 0.2);
   --color-secondary: #1f2937;
 
   --color-background: #f8fafc;
