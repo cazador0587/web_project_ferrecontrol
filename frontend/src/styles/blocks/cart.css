@@ -226,3 +226,8 @@
     padding: 20px;
   }
 }
+
+.cart__quantity-button:active:not(:disabled),
+.cart__remove-button:active {
+  transform: translateY(1px);
+}
