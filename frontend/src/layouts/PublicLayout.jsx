@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 
-const PublicLayout = ({ children }) => {
+const PublicLayout = () => {
   return (
     <div className="public-layout">
       <header className="public-layout__header">
@@ -49,7 +49,9 @@ const PublicLayout = ({ children }) => {
         </div>
       </header>
 
-      <main className="public-layout__main">{children}</main>
+      <main className="public-layout__main">
+        <Outlet />
+      </main>
 
       <Footer text="FerreControl © Fernando Salvador" />
     </div>

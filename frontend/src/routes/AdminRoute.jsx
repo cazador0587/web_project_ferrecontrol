@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
-const AdminRoute = ({ children }) => {
+const AdminRoute = () => {
   const { user, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
@@ -17,7 +17,7 @@ const AdminRoute = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  return children;
+  return <Outlet/>;
 };
 
 export default AdminRoute;

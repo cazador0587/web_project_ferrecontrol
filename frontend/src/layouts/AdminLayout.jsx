@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Footer from "../components/Footer";
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -89,7 +89,9 @@ const AdminLayout = ({ children }) => {
         </div>
       </header>
 
-      <main className="admin-layout__main">{children}</main>
+      <main className="admin-layout__main">
+        <Outlet />
+      </main>
 
       <Footer />
     </div>

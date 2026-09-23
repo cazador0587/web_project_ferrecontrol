@@ -25,157 +25,42 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PublicLayout>
-              <Home />
-            </PublicLayout>
-          }
-        />
-
-        <Route
-          path="/catalogo"
-          element={
-            <PublicLayout>
-              <Products />
-            </PublicLayout>
-          }
-        />
-
-        <Route
-          path="/productos/:id"
-          element={
-            <PublicLayout>
-              <ProductDetail />
-            </PublicLayout>
-          }
-        />
+        <Route element={<PublicLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/catalogo" element={<Products />} />
+          <Route path="/productos/:id" element={<ProductDetail />} />
+        </Route>
 
         <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/perfil"
-          element={
-            <ProtectedRoute>
-              <ClientLayout>
-                <Profile />
-              </ClientLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/carrito"
-          element={
-            <ProtectedRoute>
-              <ClientLayout>
-                <Cart />
-              </ClientLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/pedido-confirmado"
-          element={
-            <ProtectedRoute>
-              <ClientLayout>
-                <OrderConfirmation />
-              </ClientLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/mis-pedidos"
-          element={
-            <ProtectedRoute>
-              <ClientLayout>
-                <MyOrders />
-              </ClientLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<ClientLayout />}>
+            <Route path="/perfil" element={<Profile />} />
+            <Route path="/carrito" element={<Cart />} />
+            <Route path="/pedido-confirmado" element={<OrderConfirmation />} />
+            <Route path="/mis-pedidos" element={<MyOrders />} />
+          </Route>
+        </Route>
 
         <Route path="/registro" element={<Register />} />
 
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminDashboard />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/productos"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminProducts />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/productos/nuevo"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminProductCreate />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/productos/:id/editar"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminProductEdit />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/pedidos"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminOrders />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/categorias"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminCategories />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/usuarios"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminUsers />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/productos" element={<AdminProducts />} />
+            <Route
+              path="/admin/productos/nuevo"
+              element={<AdminProductCreate />}
+            />
+            <Route
+              path="/admin/productos/:id/editar"
+              element={<AdminProductEdit />}
+            />
+            <Route path="/admin/pedidos" element={<AdminOrders />} />
+            <Route path="/admin/categorias" element={<AdminCategories />} />
+            <Route path="/admin/usuarios" element={<AdminUsers />} />
+          </Route>
+        </Route>
 
         <Route
           path="*"
