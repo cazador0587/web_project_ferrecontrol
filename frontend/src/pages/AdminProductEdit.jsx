@@ -7,7 +7,6 @@ const AdminProductEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [categoryList, setCategoryList] = useState([]);
@@ -57,7 +56,6 @@ const AdminProductEdit = () => {
     products
       .getById(id)
       .then((data) => {
-        // setProduct(data.product);
 
         setFormData({
           name: data.product.name,
@@ -120,7 +118,6 @@ const AdminProductEdit = () => {
             onChange={handleChange}
           />
         </div>
-        {/* <p>Nombre: {product.name}</p> */}
         <div>
           <label htmlFor="sku">SKU</label>
           <input
@@ -131,8 +128,6 @@ const AdminProductEdit = () => {
             onChange={handleChange}
           />
         </div>
-        {/* <p>SKU: {product.sku}</p> */}
-        {/* <p>Precio: ${product.price}</p> */}
         <div>
           <label htmlFor="price">Precio</label>
           <input
@@ -145,7 +140,7 @@ const AdminProductEdit = () => {
             onChange={handleChange}
           />
         </div>
-        {/* <p>Stock: {product.stock}</p> */}
+        
         <div>
           <label htmlFor="stock">Stock</label>
           <input

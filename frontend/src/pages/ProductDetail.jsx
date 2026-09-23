@@ -47,7 +47,6 @@ const ProductDetail = () => {
     try {
       await cart.addItem(product._id, 1);
       navigate("/carrito");
-      // setCartMessage("Producto agregado al carrito.");
     } catch (err) {
       setCartMessage(err.message);
     } finally {
