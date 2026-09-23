@@ -29,6 +29,7 @@ const AppRouter = () => {
           <Route index element={<Home />} />
           <Route path="/catalogo" element={<Products />} />
           <Route path="/productos/:id" element={<ProductDetail />} />
+          <Route path="*" element={<h1>Página no encontrada</h1>} />
         </Route>
 
         <Route path="/login" element={<Login />} />
@@ -61,15 +62,6 @@ const AppRouter = () => {
             <Route path="/admin/usuarios" element={<AdminUsers />} />
           </Route>
         </Route>
-
-        <Route
-          path="*"
-          element={
-            <PublicLayout>
-              <h1>Página no encontrada</h1>
-            </PublicLayout>
-          }
-        />
       </Routes>
     </BrowserRouter>
   );
