@@ -7,6 +7,7 @@ const AdminCategories = () => {
   const [description, setDescription] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -24,6 +25,7 @@ const AdminCategories = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+    setIsSubmitting(true);
 
     try {
       const data = editingId
@@ -49,6 +51,8 @@ const AdminCategories = () => {
       setDescription("");
     } catch (error) {
       setError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -99,8 +103,12 @@ const AdminCategories = () => {
           />
         </div>
 
-        <button type="submit">
-          {editingId ? "Guardar cambios" : "Crear categoría"}
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting
+            ? "Guardando..."
+            : editingId
+              ? "Guardar cambios"
+              : "Crear categoría"}
         </button>
 
         {editingId && (
