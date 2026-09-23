@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 const AdminLayout = ({ children }) => {
@@ -12,38 +12,87 @@ const AdminLayout = ({ children }) => {
   };
 
   return (
-    <div>
-      <header>
-        <h1>FerreControl</h1>
-        <p>Panel administrativo</p>
-
-        <p>
+    <div className="admin-layout">
+      <header className="admin-layout__header">
+        <div className="admin-layout__header-content"></div>
+        <h1 className="admin-layout__title">FerreControl</h1>
+        <p className="admin-layout__subtitle">Panel administrativo</p>
+        <p className="admin-layout__user">
           {user?.name} {user?.lastname}
         </p>
 
-        <nav>
-          <Link to="/admin">Dashboard</Link>
-          {" | "}
-          <Link to="/admin/productos">Productos</Link>
-          {" | "}
-          <Link to="/admin/productos/nuevo">Crear Producto</Link>
-          {" | "}
-          <Link to="/admin/pedidos">Pedidos</Link>
-          {" | "}
-          <Link to="/admin/usuarios">Usuarios</Link>
-          {" | "}
-          <Link to="/admin/categorias">Categorías</Link>
+        <nav className="admin-layout__nav">
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin"
+            end
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin/productos"
+            end
+          >
+            Productos
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin/productos/nuevo"
+            end
+          >
+            Crear Producto
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin/pedidos"
+            end
+          >
+            Pedidos
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin/usuarios"
+            end
+          >
+            Usuarios
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              `admin-layout__link${isActive ? " admin-layout__link--active" : ""}`
+            }
+            to="/admin/categorias"
+            end
+          >
+            Categorías
+          </NavLink>
         </nav>
 
-        <button type="button" onClick={handleLogout}>
+        <button
+          className="admin-layout__logout"
+          type="button"
+          onClick={handleLogout}
+        >
           Cerrar sesión
         </button>
       </header>
 
-      <main>{children}</main>
+      <main className="admin-layout__main">{children}</main>
 
-      <footer>
-        <p>FerreControl</p>
+      <footer className="admin-layout__footer">
+        <div className="admin-layout__footer-content">
+          <p className="admin-layout__footer-text">FerreControl</p>
+        </div>
       </footer>
     </div>
   );
