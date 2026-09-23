@@ -101,14 +101,7 @@ const Cart = () => {
       await orders.create();
 
       navigate("/pedido-confirmado");
-      /* const data = await orders.create();
-
-      console.log("Pedido creado:", data.order);
-
-      setCartData({
-        ...cartData,
-        items: [],
-      });*/
+      
     } catch (err) {
       setError(err.message);
     } finally {

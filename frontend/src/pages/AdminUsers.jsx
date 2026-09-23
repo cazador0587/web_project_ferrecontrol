@@ -12,7 +12,6 @@ const AdminUsers = () => {
         setUserList(data.users);
       } catch (error) {
         setError(error.message);
-        //console.error("Error al cargar los usuarios:", error);
       }
     };
 
