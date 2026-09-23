@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 const ClientLayout = ({ children }) => {
@@ -12,31 +12,66 @@ const ClientLayout = ({ children }) => {
   };
 
   return (
-    <div>
-      <header>
-        <p>
-          {user?.name} {user?.lastname}
-        </p>
+    <div className="client-layout">
+      <header className="client-layout__header">
+        <div className="client-layout__header-content">
+          <p className="client-layout__user">
+            {user?.name} {user?.lastname}
+          </p>
+          <nav className="client-layout__nav">
+            <NavLink
+              className={({ isActive }) =>
+                `client-layout__link${isActive ? " client-layout__link--active" : ""}`
+              }
+              to="/catalogo"
+            >
+              Catálogo
+            </NavLink>
 
-        <nav>
-          <Link to="/catalogo">Catálogo</Link>
-          {" | "}
-          <Link to="/carrito">Carrito</Link>
-          {" | "}
-          <Link to="/mis-pedidos">Mis pedidos</Link>
-          {" | "}
-          <Link to="/perfil">Mi perfil</Link>
-        </nav>
+            <NavLink
+              className={({ isActive }) =>
+                `client-layout__link${isActive ? " client-layout__link--active" : ""}`
+              }
+              to="/carrito"
+            >
+              Carrito
+            </NavLink>
 
-        <button type="button" onClick={handleLogout}>
-          Cerrar sesión
-        </button>
+            <NavLink
+              className={({ isActive }) =>
+                `client-layout__link${isActive ? " client-layout__link--active" : ""}`
+              }
+              to="/mis-pedidos"
+            >
+              Mis pedidos
+            </NavLink>
+
+            <NavLink
+              className={({ isActive }) =>
+                `client-layout__link${isActive ? " client-layout__link--active" : ""}`
+              }
+              to="/perfil"
+            >
+              Mi perfil
+            </NavLink>
+          </nav>
+
+          <button
+            className="client-layout__logout"
+            type="button"
+            onClick={handleLogout}
+          >
+            Cerrar sesión
+          </button>
+        </div>
       </header>
 
-      <main>{children}</main>
+      <main className="client-layout__main">{children}</main>
 
-      <footer>
-        <p>FerreControl</p>
+      <footer className="client-layout__footer">
+        <div className="client-layout__footer-content">
+          <p className="client-layout__footer-text">FerreControl</p>
+        </div>
       </footer>
     </div>
   );

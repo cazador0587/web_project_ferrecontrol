@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { cart } from "../services/cart";
 import { orders } from "../services/orders";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
@@ -74,9 +74,20 @@ const Cart = () => {
   }
 
   if (!cartData || cartData.items.length === 0) {
-    return <p>Tu carrito está vacío.</p>;
-  }
+    return (
+      <section className="cart">
+        <h1 className="cart__title">Mi carrito</h1>
 
+        <div className="cart__empty">
+          <p className="cart__empty-text">Tu carrito está vacío.</p>
+
+          <Link className="cart__empty-link" to="/catalogo">
+            Explorar catálogo
+          </Link>
+        </div>
+      </section>
+    );
+  }
   const total = cartData.items.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0,
@@ -106,44 +117,55 @@ const Cart = () => {
   };
 
   return (
-    <section>
-      <h1>Mi carrito</h1>
+    <section className="cart">
+      <h1 className="cart__title">Mi carrito</h1>
 
       {cartData.items.map((item) => (
-        <article key={item.product._id}>
-          <h2>{item.product.name}</h2>
+        <article className="cart__item" key={item.product._id}>
+          <h2 className="cart__item-title">{item.product.name}</h2>
 
-          <p>SKU: {item.product.sku}</p>
-          <p>Precio: ${item.product.price}</p>
-          <p>Cantidad: {item.quantity}</p>
+          <p className="cart__item-sku">SKU: {item.product.sku}</p>
+          <p className="cart__item-price">${item.product.price}</p>
+          <p className="cart__item-quantity">Cantidad: {item.quantity}</p>
+
+          <div className="cart__quantity-controls">
+            <button
+              className="cart__quantity-button"
+              type="button"
+              onClick={() => handleDecreaseQuantity(item)}
+              disabled={item.quantity <= 1}
+            >
+              -
+            </button>
+
+            <button
+              className="cart__quantity-button"
+              type="button"
+              onClick={() => handleIncreaseQuantity(item)}
+              disabled={item.quantity >= item.product.stock}
+            >
+              +
+            </button>
+          </div>
 
           <button
+            className="cart__remove-button"
             type="button"
-            onClick={() => handleDecreaseQuantity(item)}
-            disabled={item.quantity <= 1}
+            onClick={() => handleRemoveItem(item)}
           >
-            -
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleIncreaseQuantity(item)}
-            disabled={item.quantity >= item.product.stock}
-          >
-            +
-          </button>
-
-          <button type="button" onClick={() => handleRemoveItem(item)}>
             Eliminar
           </button>
 
-          <p>Subtotal: ${item.product.price * item.quantity}</p>
+          <p className="cart__item-subtotal">
+            Subtotal: ${item.product.price * item.quantity}
+          </p>
         </article>
       ))}
 
-      <h2>Total: ${total}</h2>
+      <h2 className="cart__total">Total: ${total}</h2>
 
       <button
+        className="cart__checkout-button"
         type="button"
         onClick={handleCreateOrder}
         disabled={isCreatingOrder}
