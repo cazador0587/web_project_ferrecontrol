@@ -117,39 +117,48 @@ const AdminProductCreate = () => {
           />
         </div>
 
-        <input
-          id="price"
-          name="price"
-          type="number"
-          min="0"
-          step="0.01"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
+        <div>
+          <label htmlFor="price">Precio</label>
+          <input
+            id="price"
+            name="price"
+            type="number"
+            min="0"
+            step="0.01"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          id="stock"
-          name="stock"
-          type="number"
-          min="0"
-          step="1"
-          value={formData.stock}
-          onChange={handleChange}
-          required
-        />
+        <div>
+          <label htmlFor="stock">Stock</label>
+          <input
+            id="stock"
+            name="stock"
+            type="number"
+            min="0"
+            step="1"
+            value={formData.stock}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          id="minStock"
-          name="minStock"
-          type="number"
-          min="0"
-          step="1"
-          value={formData.minStock}
-          onChange={handleChange}
-          required
-        />
-
+        <div>
+          <label htmlFor="minStock">Stock mínimo</label>
+          <input
+            id="minStock"
+            name="minStock"
+            type="number"
+            min="0"
+            step="1"
+            value={formData.minStock}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
         <div>
           <label htmlFor="image">URL de imagen</label>
           <input

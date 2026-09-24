@@ -94,7 +94,7 @@ const Register = () => {
           />
         </div>
 
-        {error && <p>{error}</p>}
+        {error && <p role="alert">{error}</p>}
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}

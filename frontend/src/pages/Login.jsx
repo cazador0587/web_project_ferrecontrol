@@ -75,7 +75,7 @@ const Login = () => {
           />
         </div>
 
-        {error && <p>{error}</p>}
+        {error && <p role="alert">{error}</p>}
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}

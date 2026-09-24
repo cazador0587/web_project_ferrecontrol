@@ -106,7 +106,7 @@ const AdminCategories = () => {
   return (
     <section>
       <h1>Administrar categorías</h1>
-      {error && <p>{error}</p>}
+      {error && <p role="alert">{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
