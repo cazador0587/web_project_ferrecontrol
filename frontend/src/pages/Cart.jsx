@@ -7,6 +7,7 @@ const Cart = () => {
   const [cartData, setCartData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const [updatingItemId, setUpdatingItemId] = useState(null);
   const navigate = useNavigate();
@@ -26,20 +27,20 @@ const Cart = () => {
   }, []);
 
   const handleIncreaseQuantity = async (item) => {
-  try {
-    setUpdatingItemId(item.product._id);
+    try {
+      setActionError("");
+      setUpdatingItemId(item.product._id);
 
-    const newQuantity = item.quantity + 1;
-    const data = await cart.updateItem(item.product._id, newQuantity);
+      const newQuantity = item.quantity + 1;
+      const data = await cart.updateItem(item.product._id, newQuantity);
 
-    setCartData(data.cart);
-    setError("");
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setUpdatingItemId(null);
-  }
-};
+      setCartData(data.cart);
+    } catch (err) {
+      setActionError(err.message);
+    } finally {
+      setUpdatingItemId(null);
+    }
+  };
 
   const handleDecreaseQuantity = async (item) => {
     if (item.quantity <= 1) {
@@ -47,15 +48,15 @@ const Cart = () => {
     }
 
     try {
+      setActionError("");
       setUpdatingItemId(item.product._id);
 
       const newQuantity = item.quantity - 1;
       const data = await cart.updateItem(item.product._id, newQuantity);
 
       setCartData(data.cart);
-      setError("");
     } catch (err) {
-      setError(err.message);
+      setActionError(err.message);
     } finally {
       setUpdatingItemId(null);
     }
@@ -63,14 +64,14 @@ const Cart = () => {
 
   const handleRemoveItem = async (item) => {
     try {
+      setActionError("");
       setUpdatingItemId(item.product._id);
 
       const data = await cart.removeItem(item.product._id);
 
       setCartData(data.cart);
-      setError("");
     } catch (err) {
-      setError(err.message);
+      setActionError(err.message);
     } finally {
       setUpdatingItemId(null);
     }
@@ -106,15 +107,15 @@ const Cart = () => {
 
   const handleCreateOrder = async () => {
     try {
+      setActionError("");
       setIsCreatingOrder(true);
-      setError("");
 
       await orders.create();
 
       navigate("/pedido-confirmado");
       
     } catch (err) {
-      setError(err.message);
+      setActionError(err.message);
     } finally {
       setIsCreatingOrder(false);
     }
@@ -123,6 +124,12 @@ const Cart = () => {
   return (
     <section className="cart">
       <h1 className="cart__title">Mi carrito</h1>
+
+      {actionError && (
+        <p className="cart__error" role="alert">
+          {actionError}
+        </p>
+      )}
 
       {cartData.items.map((item) => (
         <article className="cart__item" key={item.product._id}>
