@@ -6,7 +6,7 @@ const AdminUsers = () => {
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [updatingUserId, setUpdatingUserId] = useState(null);
+  const [updatingUserIds, setUpdatingUserIds] = useState(new Set());
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -24,21 +24,30 @@ const AdminUsers = () => {
   }, []);
 
   const handleRoleChange = async (id, role) => {
-    try {
-      setActionError("");
-      setUpdatingUserId(id);
+  try {
+    setActionError("");
 
-      const data = await auth.updateUserRole(id, role);
+    setUpdatingUserIds((currentIds) => {
+      const nextIds = new Set(currentIds);
+      nextIds.add(id);
+      return nextIds;
+    });
 
-      setUserList((currentUsers) =>
-        currentUsers.map((user) => (user._id === id ? data.user : user)),
-      );
-    } catch (error) {
-      setActionError(error.message);
-    } finally {
-      setUpdatingUserId(null);
-    }
-  };
+    const data = await auth.updateUserRole(id, role);
+
+    setUserList((currentUsers) =>
+      currentUsers.map((user) => (user._id === id ? data.user : user)),
+    );
+  } catch (error) {
+    setActionError(error.message);
+  } finally {
+    setUpdatingUserIds((currentIds) => {
+      const nextIds = new Set(currentIds);
+      nextIds.delete(id);
+      return nextIds;
+    });
+  }
+};
 
   if (isLoading) {
     return <p>Cargando usuarios...</p>;
@@ -64,7 +73,8 @@ const AdminUsers = () => {
           <select
             value={user.role}
             onChange={(event) => handleRoleChange(user._id, event.target.value)}
-            disabled={updatingUserId === user._id}
+            disabled={updatingUserIds.has(user._id)}
+            aria-label={`Cambiar rol de ${user.name} ${user.lastname}`}
           >
             <option value="client">Cliente</option>
             <option value="admin">Administrador</option>

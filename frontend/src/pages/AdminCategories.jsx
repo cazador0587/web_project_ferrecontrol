@@ -10,7 +10,7 @@ const AdminCategories = () => {
   const [loadError, setLoadError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [deletingId, setDeletingId] = useState(null);
+  const [deletingIds, setDeletingIds] = useState(new Set());
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -72,7 +72,13 @@ const AdminCategories = () => {
 
     try {
       setError("");
-      setDeletingId(id);
+
+      setDeletingIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(id);
+        return nextIds;
+      });
+
       await categories.remove(id);
 
       setCategoryList((currentCategories) =>
@@ -81,7 +87,11 @@ const AdminCategories = () => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setDeletingId(null);
+      setDeletingIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(id);
+        return nextIds;
+      });
     }
   };
 
@@ -160,9 +170,9 @@ const AdminCategories = () => {
           <button
             type="button"
             onClick={() => handleDelete(category._id)}
-            disabled={deletingId === category._id}
+            disabled={deletingIds.has(category._id)}
           >
-            {deletingId === category._id ? "Eliminando..." : "Eliminar"}
+            {deletingIds.has(category._id) ? "Eliminando..." : "Eliminar"}
           </button>
         </div>
       ))}

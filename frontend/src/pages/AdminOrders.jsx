@@ -6,12 +6,17 @@ const AdminOrders = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
-  const [updatingOrderId, setUpdatingOrderId] = useState(null);
+  const [updatingOrderIds, setUpdatingOrderIds] = useState(new Set());
 
   const handleStatusChange = async (id, status) => {
     try {
       setActionError("");
-      setUpdatingOrderId(id);
+
+      setUpdatingOrderIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(id);
+        return nextIds;
+      });
 
       const data = await orders.updateStatus(id, status);
 
@@ -21,7 +26,11 @@ const AdminOrders = () => {
     } catch (err) {
       setActionError(err.message);
     } finally {
-      setUpdatingOrderId(null);
+      setUpdatingOrderIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(id);
+        return nextIds;
+      });
     }
   };
 
@@ -67,9 +76,9 @@ const AdminOrders = () => {
             <button
               type="button"
               onClick={() => handleStatusChange(order._id, "confirmed")}
-              disabled={updatingOrderId === order._id}
+              disabled={updatingOrderIds.has(order._id)}
             >
-              {updatingOrderId === order._id
+              {updatingOrderIds.has(order._id)
                 ? "Actualizando..."
                 : "Confirmar pedido"}
             </button>
@@ -79,9 +88,9 @@ const AdminOrders = () => {
             <button
               type="button"
               onClick={() => handleStatusChange(order._id, "preparing")}
-              disabled={updatingOrderId === order._id}
+              disabled={updatingOrderIds.has(order._id)}
             >
-              {updatingOrderId === order._id
+              {updatingOrderIds.has(order._id)
                 ? "Actualizando..."
                 : "Preparar pedido"}
             </button>
@@ -91,9 +100,9 @@ const AdminOrders = () => {
             <button
               type="button"
               onClick={() => handleStatusChange(order._id, "shipped")}
-              disabled={updatingOrderId === order._id}
+              disabled={updatingOrderIds.has(order._id)}
             >
-              {updatingOrderId === order._id
+              {updatingOrderIds.has(order._id)
                 ? "Actualizando..."
                 : "Enviar pedido"}
             </button>
@@ -103,9 +112,9 @@ const AdminOrders = () => {
             <button
               type="button"
               onClick={() => handleStatusChange(order._id, "delivered")}
-              disabled={updatingOrderId === order._id}
+              disabled={updatingOrderIds.has(order._id)}
             >
-              {updatingOrderId === order._id
+              {updatingOrderIds.has(order._id)
                 ? "Actualizando..."
                 : "Marcar como entregado"}
             </button>
@@ -115,9 +124,9 @@ const AdminOrders = () => {
             <button
               type="button"
               onClick={() => handleStatusChange(order._id, "cancelled")}
-              disabled={updatingOrderId === order._id}
+              disabled={updatingOrderIds.has(order._id)}
             >
-              {updatingOrderId === order._id
+              {updatingOrderIds.has(order._id)
                 ? "Actualizando..."
                 : "Cancelar pedido"}
             </button>

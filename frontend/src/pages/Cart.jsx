@@ -9,7 +9,7 @@ const Cart = () => {
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
-  const [updatingItemId, setUpdatingItemId] = useState(null);
+  const [updatingItemIds, setUpdatingItemIds] = useState(new Set());
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,18 +27,29 @@ const Cart = () => {
   }, []);
 
   const handleIncreaseQuantity = async (item) => {
+    const itemId = item.product._id;
+
     try {
       setActionError("");
-      setUpdatingItemId(item.product._id);
+
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(itemId);
+        return nextIds;
+      });
 
       const newQuantity = item.quantity + 1;
-      const data = await cart.updateItem(item.product._id, newQuantity);
+      const data = await cart.updateItem(itemId, newQuantity);
 
       setCartData(data.cart);
     } catch (err) {
       setActionError(err.message);
     } finally {
-      setUpdatingItemId(null);
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(itemId);
+        return nextIds;
+      });
     }
   };
 
@@ -47,33 +58,55 @@ const Cart = () => {
       return;
     }
 
+    const itemId = item.product._id;
+
     try {
       setActionError("");
-      setUpdatingItemId(item.product._id);
+
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(itemId);
+        return nextIds;
+      });
 
       const newQuantity = item.quantity - 1;
-      const data = await cart.updateItem(item.product._id, newQuantity);
+      const data = await cart.updateItem(itemId, newQuantity);
 
       setCartData(data.cart);
     } catch (err) {
       setActionError(err.message);
     } finally {
-      setUpdatingItemId(null);
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(itemId);
+        return nextIds;
+      });
     }
   };
 
   const handleRemoveItem = async (item) => {
+    const itemId = item.product._id;
+
     try {
       setActionError("");
-      setUpdatingItemId(item.product._id);
 
-      const data = await cart.removeItem(item.product._id);
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(itemId);
+        return nextIds;
+      });
+
+      const data = await cart.removeItem(itemId);
 
       setCartData(data.cart);
     } catch (err) {
       setActionError(err.message);
     } finally {
-      setUpdatingItemId(null);
+      setUpdatingItemIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(itemId);
+        return nextIds;
+      });
     }
   };
 
@@ -145,7 +178,7 @@ const Cart = () => {
               type="button"
               onClick={() => handleDecreaseQuantity(item)}
               disabled={
-                item.quantity <= 1 || updatingItemId === item.product._id
+                item.quantity <= 1 || updatingItemIds.has(item.product._id)
               }
             >
               -
@@ -157,7 +190,7 @@ const Cart = () => {
               onClick={() => handleIncreaseQuantity(item)}
               disabled={
                 item.quantity >= item.product.stock ||
-                updatingItemId === item.product._id
+                updatingItemIds.has(item.product._id)
               }
             >
               +
@@ -168,7 +201,7 @@ const Cart = () => {
             className="cart__remove-button"
             type="button"
             onClick={() => handleRemoveItem(item)}
-            disabled={updatingItemId === item.product._id}
+            disabled={updatingItemIds.has(item.product._id)}
           >
             Eliminar
           </button>

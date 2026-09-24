@@ -7,7 +7,7 @@ const AdminProducts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
-  const [deletingId, setDeletingId] = useState(null);
+  const [deletingIds, setDeletingIds] = useState(new Set());
 
   useEffect(() => {
     products
@@ -34,7 +34,13 @@ const AdminProducts = () => {
   const handleDelete = async (id) => {
     try {
       setActionError("");
-      setDeletingId(id);
+
+      setDeletingIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(id);
+        return nextIds;
+      });
+
       await products.remove(id);
 
       setProductList((currentProducts) =>
@@ -43,7 +49,11 @@ const AdminProducts = () => {
     } catch (err) {
       setActionError(err.message);
     } finally {
-      setDeletingId(null);
+      setDeletingIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(id);
+        return nextIds;
+      });
     }
   };
 
@@ -78,9 +88,9 @@ const AdminProducts = () => {
             <button
               type="button"
               onClick={() => handleDelete(product._id)}
-              disabled={deletingId === product._id}
+              disabled={deletingIds.has(product._id)}
             >
-              {deletingId === product._id ? "Desactivando..." : "Desactivar"}
+              {deletingIds.has(product._id) ? "Desactivando..." : "Desactivar"}
             </button>
           </article>
         ))
