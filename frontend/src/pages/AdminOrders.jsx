@@ -5,11 +5,12 @@ const AdminOrders = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
 
   const handleStatusChange = async (id, status) => {
     try {
-      setError("");
+      setActionError("");
       setUpdatingOrderId(id);
 
       const data = await orders.updateStatus(id, status);
@@ -18,7 +19,7 @@ const AdminOrders = () => {
         currentOrders.map((order) => (order._id === id ? data.order : order)),
       );
     } catch (err) {
-      setError(err.message);
+      setActionError(err.message);
     } finally {
       setUpdatingOrderId(null);
     }
@@ -50,6 +51,8 @@ const AdminOrders = () => {
     <section>
       <h1>Administrar pedidos</h1>
       <p>Pedidos registrados: {orderList.length}</p>
+
+      {actionError && <p role="alert">{actionError}</p>}
 
       {orderList.map((order) => (
         <article key={order._id}>
