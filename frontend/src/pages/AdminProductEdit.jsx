@@ -58,39 +58,38 @@ const AdminProductEdit = () => {
   };
 
   useEffect(() => {
-    products
-      .getById(id)
-      .then((data) => {
+    const loadProductData = async () => {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        const [productData, categoryData] = await Promise.all([
+          products.getById(id),
+          categories.getAll(),
+        ]);
 
         setFormData({
-          name: data.product.name,
-          description: data.product.description,
-          sku: data.product.sku,
-          price: data.product.price,
-          stock: data.product.stock,
-          minStock: data.product.minStock,
-          image: data.product.image || "",
-          category: data.product.category?._id || data.product.category,
+          name: productData.product.name,
+          description: productData.product.description,
+          sku: productData.product.sku,
+          price: productData.product.price,
+          stock: productData.product.stock,
+          minStock: productData.product.minStock,
+          image: productData.product.image || "",
+          category:
+            productData.product.category?._id || productData.product.category,
         });
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [id]);
 
-  useEffect(() => {
-    categories
-      .getAll()
-      .then((data) => {
-        setCategoryList(data.categories);
-      })
-      .catch((err) => {
+        setCategoryList(categoryData.categories);
+      } catch (err) {
         setError(err.message);
-      });
-  }, []);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProductData();
+  }, [id]);
 
   if (isLoading) {
     return <p>Cargando producto...</p>;
