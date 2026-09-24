@@ -8,6 +8,7 @@ const AdminCategories = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -67,6 +68,7 @@ const AdminCategories = () => {
 
     try {
       setError("");
+      setDeletingId(id);
       await categories.remove(id);
 
       setCategoryList((currentCategories) =>
@@ -74,6 +76,8 @@ const AdminCategories = () => {
       );
     } catch (error) {
       setError(error.message);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -141,8 +145,12 @@ const AdminCategories = () => {
             Editar
           </button>
 
-          <button type="button" onClick={() => handleDelete(category._id)}>
-            Eliminar
+          <button
+            type="button"
+            onClick={() => handleDelete(category._id)}
+            disabled={deletingId === category._id}
+          >
+            {deletingId === category._id ? "Eliminando..." : "Eliminar"}
           </button>
         </div>
       ))}
