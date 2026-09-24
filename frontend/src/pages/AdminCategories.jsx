@@ -7,6 +7,8 @@ const AdminCategories = () => {
   const [description, setDescription] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
@@ -16,7 +18,9 @@ const AdminCategories = () => {
         const data = await categories.getAll();
         setCategoryList(data.categories);
       } catch (error) {
-        console.error("Error al cargar las categorías:", error);
+        setLoadError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -80,6 +84,14 @@ const AdminCategories = () => {
       setDeletingId(null);
     }
   };
+
+  if (isLoading) {
+    return <p>Cargando categorías...</p>;
+  }
+
+  if (loadError) {
+    return <p>Error al cargar las categorías: {loadError}</p>;
+  }
 
   return (
     <section>

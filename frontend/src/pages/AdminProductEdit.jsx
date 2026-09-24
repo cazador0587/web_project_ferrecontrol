@@ -10,6 +10,7 @@ const AdminProductEdit = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [categoryList, setCategoryList] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const AdminProductEdit = () => {
     event.preventDefault();
 
     try {
-      setError("");
+      setSubmitError("");
       setIsSubmitting(true);
 
       const productData = {
@@ -50,7 +51,7 @@ const AdminProductEdit = () => {
 
       navigate("/admin/productos");
     } catch (err) {
-      setError(err.message);
+      setSubmitError(err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -102,6 +103,8 @@ const AdminProductEdit = () => {
   return (
     <section>
       <h1>Editar producto</h1>
+      {submitError && <p role="alert">{submitError}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nombre</label>
@@ -111,6 +114,7 @@ const AdminProductEdit = () => {
             type="text"
             value={formData.name}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -120,6 +124,7 @@ const AdminProductEdit = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -130,6 +135,7 @@ const AdminProductEdit = () => {
             type="text"
             value={formData.sku}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -142,6 +148,7 @@ const AdminProductEdit = () => {
             step="0.01"
             value={formData.price}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -155,6 +162,7 @@ const AdminProductEdit = () => {
             step="1"
             value={formData.stock}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -167,6 +175,7 @@ const AdminProductEdit = () => {
             step="1"
             value={formData.minStock}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -186,6 +195,7 @@ const AdminProductEdit = () => {
             name="category"
             value={formData.category}
             onChange={handleChange}
+            required
           >
             <option value="" disabled>
               Selecciona una categoría

@@ -12,26 +12,26 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    products
-      .getAll()
-      .then((data) => {
-        setProductList(data.products);
-      })
-      .catch((err) => {
+    const loadCatalog = async () => {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        const [productData, categoryData] = await Promise.all([
+          products.getAll(),
+          categories.getAll(),
+        ]);
+
+        setProductList(productData.products);
+        setCategoryList(categoryData.categories);
+      } catch (err) {
         setError(err.message);
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false);
-      });
-    
-    categories
-      .getAll()
-      .then((data) => {
-        setCategoryList(data.categories);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+      }
+    };
+
+    loadCatalog();
   }, []);
 
   const filteredProducts = productList.filter((product) => {

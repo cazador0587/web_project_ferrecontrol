@@ -9,6 +9,7 @@ const AdminProductCreate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -33,7 +34,7 @@ const AdminProductCreate = () => {
     event.preventDefault();
 
     try {
-      setError("");
+      setSubmitError("");
       setIsSubmitting(true);
 
       const productData = {
@@ -47,7 +48,7 @@ const AdminProductCreate = () => {
 
       navigate("/admin/productos");
     } catch (err) {
-      setError(err.message);
+      setSubmitError(err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -78,6 +79,8 @@ const AdminProductCreate = () => {
   return (
     <section>
       <h1>Crear producto</h1>
+      {submitError && <p role="alert">{submitError}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nombre</label>

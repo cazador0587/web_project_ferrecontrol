@@ -4,6 +4,8 @@ import { auth } from "../services/auth";
 const AdminUsers = () => {
   const [userList, setUserList] = useState([]);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [updatingUserId, setUpdatingUserId] = useState(null);
 
   useEffect(() => {
@@ -13,6 +15,8 @@ const AdminUsers = () => {
         setUserList(data.users);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -21,7 +25,7 @@ const AdminUsers = () => {
 
   const handleRoleChange = async (id, role) => {
     try {
-      setError("");
+      setActionError("");
       setUpdatingUserId(id);
 
       const data = await auth.updateUserRole(id, role);
@@ -30,16 +34,24 @@ const AdminUsers = () => {
         currentUsers.map((user) => (user._id === id ? data.user : user)),
       );
     } catch (error) {
-      setError(error.message);
+      setActionError(error.message);
     } finally {
       setUpdatingUserId(null);
     }
   };
 
+  if (isLoading) {
+    return <p>Cargando usuarios...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <section>
       <h1>Administrar usuarios</h1>
-      {error && <p>{error}</p>}
+      {actionError && <p role="alert">{actionError}</p>}
 
       <p>Usuarios encontrados: {userList.length}</p>
       {userList.map((user) => (

@@ -6,6 +6,7 @@ const AdminProducts = () => {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const AdminProducts = () => {
 
   const handleDelete = async (id) => {
     try {
+      setActionError("");
       setDeletingId(id);
       await products.remove(id);
 
@@ -39,7 +41,7 @@ const AdminProducts = () => {
         currentProducts.filter((product) => product._id !== id),
       );
     } catch (err) {
-      setError(err.message);
+      setActionError(err.message);
     } finally {
       setDeletingId(null);
     }
@@ -53,6 +55,8 @@ const AdminProducts = () => {
     <section>
       <h1>Administrar productos</h1>
       <p>Productos con stock bajo: {lowStockProducts.length}</p>
+
+      {actionError && <p role="alert">{actionError}</p>}
 
       {productList.length === 0 ? (
         <p>No hay productos registrados.</p>
