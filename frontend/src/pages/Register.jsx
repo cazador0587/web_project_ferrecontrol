@@ -41,7 +41,7 @@ const Register = () => {
   };
 
   return (
-    <main>
+    <section>
       <h1>Crear cuenta</h1>
 
       <form onSubmit={handleSubmit}>
@@ -100,7 +100,7 @@ const Register = () => {
           {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </form>
-    </main>
+    </section>
   );
 };
 

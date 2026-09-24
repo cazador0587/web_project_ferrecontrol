@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <main>
+    <section>
       <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ const Login = () => {
           {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
         </button>
       </form>
-    </main>
+    </section>
   );
 };
 
