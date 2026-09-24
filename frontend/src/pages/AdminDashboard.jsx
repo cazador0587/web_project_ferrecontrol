@@ -8,51 +8,59 @@ const AdminDashboard = () => {
   const [lowStockCount, setLowStockCount] = useState(0);
   const [pendingOrderCount, setPendingOrderCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadProducts = async () => {
-      try {
-        const data = await products.getAll();
-        setProductCount(data.products.length);
+      const data = await products.getAll();
+      setProductCount(data.products.length);
 
-        const lowStockProducts = data.products.filter(
-          (product) => product.stock <= product.minStock,
-        );
+      const lowStockProducts = data.products.filter(
+        (product) => product.stock <= product.minStock,
+      );
 
-        setLowStockCount(lowStockProducts.length);
-
-      } catch (error) {
-        console.error("Error al cargar los productos:", error);
-      }
+      setLowStockCount(lowStockProducts.length);
     };
 
     const loadOrders = async () => {
-      try {
-        const data = await orders.getAll();
+      const data = await orders.getAll();
 
-        const pendingOrders = data.orders.filter(
-          (order) => order.status === "pending",
-        );
+      const pendingOrders = data.orders.filter(
+        (order) => order.status === "pending",
+      );
 
-        setPendingOrderCount(pendingOrders.length);
-      } catch (error) {
-        console.error("Error al cargar los pedidos:", error);
-      }
+      setPendingOrderCount(pendingOrders.length);
     };
 
     const loadUsers = async () => {
+      const data = await auth.getUserCount();
+      setUserCount(data.count);
+    };
+
+    const loadDashboard = async () => {
+      setIsLoading(true);
+      setError("");
+
       try {
-        const data = await auth.getUserCount();
-        setUserCount(data.count);
+        await Promise.all([loadProducts(), loadOrders(), loadUsers()]);
       } catch (error) {
-        console.error("Error al cargar la cantidad de usuarios:", error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    loadProducts();
-    loadOrders();
-    loadUsers();
+    loadDashboard();
   }, []);
+  
+if (isLoading) {
+  return <p>Cargando resumen administrativo...</p>;
+}
+
+if (error) {
+  return <p>Error al cargar el resumen: {error}</p>;
+}
 
   return (
     <section>
