@@ -1,0 +1,99 @@
+.order-confirmation {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-8) 0;
+}
+
+.order-confirmation__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 560px;
+  padding: var(--space-8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.order-confirmation__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--color-success);
+  border-radius: 50%;
+  color: var(--color-success);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+.order-confirmation__title {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.order-confirmation__description {
+  max-width: 440px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+}
+
+.order-confirmation__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-heading);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.order-confirmation__link:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.order-confirmation__link:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.order-confirmation__link:active {
+  transform: translateY(1px);
+}
+
+@media screen and (max-width: 600px) {
+  .order-confirmation {
+    padding: var(--space-4) 0;
+  }
+
+  .order-confirmation__card {
+    padding: var(--space-6);
+  }
+
+  .order-confirmation__title {
+    font-size: var(--font-size-2xl);
+  }
+}

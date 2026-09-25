@@ -54,31 +54,65 @@ const AdminDashboard = () => {
     loadDashboard();
   }, []);
   
-if (isLoading) {
-  return <p>Cargando resumen administrativo...</p>;
-}
-
-if (error) {
-  return <p>Error al cargar el resumen: {error}</p>;
-}
-
   return (
-    <section>
-      <h1>Panel administrativo</h1>
+    <section className="admin-dashboard">
+      <div className="admin-dashboard__header">
+        <h1 className="admin-dashboard__title">Panel administrativo</h1>
 
-      <p className="home__description">
-        Administra los productos, inventario, pedidos y usuarios de
-        FerreControl.
-      </p>
+        <p className="admin-dashboard__description">
+          Administra los productos, inventario, pedidos y usuarios de
+          FerreControl.
+        </p>
+      </div>
 
-      <section>
-        <h2>Resumen</h2>
+      {isLoading && (
+        <p className="admin-dashboard__message">
+          Cargando resumen administrativo...
+        </p>
+      )}
 
-        <p>Productos registrados: {productCount}</p>
-        <p>Productos con stock bajo: {lowStockCount}</p>
-        <p>Pedidos pendientes: {pendingOrderCount}</p>
-        <p>Usuarios registrados: {userCount}</p>
-      </section>
+      {!isLoading && error && (
+        <p
+          className="admin-dashboard__message admin-dashboard__message--error"
+          role="alert"
+        >
+          Error al cargar el resumen: {error}
+        </p>
+      )}
+
+      {!isLoading && !error && (
+        <div className="admin-dashboard__content">
+          <h2 className="admin-dashboard__subtitle">Resumen</h2>
+
+          <div className="admin-dashboard__stats">
+            <article className="admin-dashboard__stat">
+              <p className="admin-dashboard__stat-label">
+                Productos registrados
+              </p>
+              <p className="admin-dashboard__stat-value">{productCount}</p>
+            </article>
+
+            <article className="admin-dashboard__stat">
+              <p className="admin-dashboard__stat-label">
+                Productos con stock bajo
+              </p>
+              <p className="admin-dashboard__stat-value">{lowStockCount}</p>
+            </article>
+
+            <article className="admin-dashboard__stat">
+              <p className="admin-dashboard__stat-label">Pedidos pendientes</p>
+              <p className="admin-dashboard__stat-value">{pendingOrderCount}</p>
+            </article>
+
+            <article className="admin-dashboard__stat">
+              <p className="admin-dashboard__stat-label">
+                Usuarios registrados
+              </p>
+              <p className="admin-dashboard__stat-value">{userCount}</p>
+            </article>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -1,5 +1,5 @@
 .footer {
-  padding: 24px var(--page-padding);
+  padding: var(--space-6) var(--page-padding);
   background-color: var(--color-secondary);
 }
 
@@ -12,14 +12,14 @@
 .footer__text {
   margin: 0;
   color: var(--color-surface);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
   line-height: 1.5;
   text-align: center;
 }
 
 @media screen and (max-width: 768px) {
   .footer {
-    padding: 24px var(--page-padding-mobile);
+    padding: var(--space-6) var(--page-padding-mobile);
   }
 }

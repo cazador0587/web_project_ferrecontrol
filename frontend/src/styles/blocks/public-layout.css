@@ -13,7 +13,7 @@
 }
 
 .public-layout__header {
-  padding: 20px var(--page-padding);
+  padding: var(--space-5) var(--page-padding);
   background-color: var(--color-secondary);
   box-shadow: var(--shadow-sm);
 }
@@ -28,29 +28,29 @@
 }
 
 .public-layout__title {
+  margin: 0;
   color: var(--color-primary);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .public-layout__nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
 .public-layout__link {
+  position: relative;
   color: var(--color-surface);
-  font-size: 16px;
-  font-weight: 400;
-  transition: color 0.2s ease;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
   text-decoration: none;
-  /*background-color: var(--color-primary);
-  color: var(--color-surface);
-  border-radius: 4px;
-  padding: 4px 8px;
-  transition: color 0.3s ease;*/
+  transition:
+    color var(--transition-fast),
+    opacity var(--transition-fast);
 }
 
 .public-layout__link:hover {
@@ -60,13 +60,24 @@
 .public-layout__link:focus-visible {
   color: var(--color-primary);
   outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  outline-offset: var(--space-1);
   border-radius: var(--radius-sm);
 }
 
 .public-layout__link--active {
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
+}
+
+.public-layout__link--active::after {
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  content: "";
 }
 
 @media screen and (max-width: 768px) {
@@ -80,20 +91,20 @@
 
   .public-layout__header-content {
     flex-direction: column;
-    gap: 16px;
+    gap: var(--space-4);
   }
 
   .public-layout__nav {
     justify-content: center;
     flex-wrap: wrap;
-    gap: 12px 20px;
+    gap: var(--space-3) var(--space-5);
   }
 
   .public-layout__title {
-    font-size: 22px;
+    font-size: var(--font-size-xl);
   }
 
   .public-layout__link {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 }

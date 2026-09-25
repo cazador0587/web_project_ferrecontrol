@@ -23,14 +23,6 @@ const AdminProducts = () => {
       });
   }, []);
 
-  if (isLoading) {
-    return <p>Cargando productos...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
   const handleDelete = async (id) => {
     try {
       setActionError("");
@@ -62,38 +54,135 @@ const AdminProducts = () => {
   );
 
   return (
-    <section>
-      <h1>Administrar productos</h1>
-      <p>Productos con stock bajo: {lowStockProducts.length}</p>
+    <section className="admin-products">
+      <div className="admin-products__header">
+        <div>
+          <h1 className="admin-products__title">Administrar productos</h1>
+          <p className="admin-products__description">
+            Consulta el inventario y administra los productos de FerreControl.
+          </p>
+        </div>
 
-      {actionError && <p role="alert">{actionError}</p>}
+        <Link
+          className="admin-products__create-link"
+          to="/admin/productos/nuevo"
+        >
+          Nuevo producto
+        </Link>
+      </div>
 
-      {productList.length === 0 ? (
-        <p>No hay productos registrados.</p>
-      ) : (
-        productList.map((product) => (
-          <article key={product._id}>
-            <h2>{product.name}</h2>
+      {isLoading && (
+        <p className="admin-products__message">Cargando productos...</p>
+      )}
 
-            <p>SKU: {product.sku}</p>
-            <p>Precio: ${product.price}</p>
-            <p>Stock: {product.stock}</p>
-            <p>Stock mínimo: {product.minStock}</p>
-            {product.stock <= product.minStock && (
-              <p>⚠ Stock bajo — requiere reposición</p>
-            )}
+      {!isLoading && error && (
+        <p
+          className="admin-products__message admin-products__message--error"
+          role="alert"
+        >
+          Error: {error}
+        </p>
+      )}
 
-            <Link to={`/admin/productos/${product._id}/editar`}>Editar</Link>
+      {!isLoading && !error && (
+        <>
+          <div className="admin-products__summary">
+            <p className="admin-products__summary-label">
+              Productos con stock bajo
+            </p>
 
-            <button
-              type="button"
-              onClick={() => handleDelete(product._id)}
-              disabled={deletingIds.has(product._id)}
+            <p className="admin-products__summary-value">
+              {lowStockProducts.length}
+            </p>
+          </div>
+
+          {actionError && (
+            <p
+              className="admin-products__message admin-products__message--error"
+              role="alert"
             >
-              {deletingIds.has(product._id) ? "Desactivando..." : "Desactivar"}
-            </button>
-          </article>
-        ))
+              {actionError}
+            </p>
+          )}
+
+          {productList.length === 0 ? (
+            <p className="admin-products__message">
+              No hay productos registrados.
+            </p>
+          ) : (
+            <div className="admin-products__list">
+              {productList.map((product) => {
+                const isLowStock = product.stock <= product.minStock;
+                const isDeleting = deletingIds.has(product._id);
+
+                return (
+                  <article className="admin-products__card" key={product._id}>
+                    <div className="admin-products__card-content">
+                      <div className="admin-products__card-header">
+                        <div>
+                          <h2 className="admin-products__product-name">
+                            {product.name}
+                          </h2>
+
+                          <p className="admin-products__sku">
+                            SKU: {product.sku}
+                          </p>
+                        </div>
+
+                        {isLowStock && (
+                          <span className="admin-products__stock-warning">
+                            Stock bajo
+                          </span>
+                        )}
+                      </div>
+
+                      <dl className="admin-products__details">
+                        <div className="admin-products__detail">
+                          <dt>Precio</dt>
+                          <dd>${product.price}</dd>
+                        </div>
+
+                        <div className="admin-products__detail">
+                          <dt>Stock</dt>
+                          <dd>{product.stock}</dd>
+                        </div>
+
+                        <div className="admin-products__detail">
+                          <dt>Stock mínimo</dt>
+                          <dd>{product.minStock}</dd>
+                        </div>
+                      </dl>
+
+                      {isLowStock && (
+                        <p className="admin-products__warning">
+                          Requiere reposición de inventario.
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="admin-products__actions">
+                      <Link
+                        className="admin-products__edit-link"
+                        to={`/admin/productos/${product._id}/editar`}
+                      >
+                        Editar
+                      </Link>
+
+                      <button
+                        className="admin-products__deactivate-button"
+                        type="button"
+                        onClick={() => handleDelete(product._id)}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? "Desactivando..." : "Desactivar"}
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </section>
   );

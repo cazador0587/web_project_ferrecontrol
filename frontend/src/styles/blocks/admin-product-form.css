@@ -1,0 +1,189 @@
+.admin-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.admin-product-form__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.admin-product-form__title {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--font-size-4-5xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.admin-product-form__description {
+  max-width: 680px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+}
+
+.admin-product-form__message {
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.admin-product-form__message--error {
+  border-style: solid;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  text-align: left;
+}
+
+.admin-product-form__card {
+  width: 100%;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-product-form__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.admin-product-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.admin-product-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.admin-product-form__label {
+  color: var(--color-heading);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+}
+
+.admin-product-form__input,
+.admin-product-form__select,
+.admin-product-form__textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  outline: none;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.admin-product-form__input,
+.admin-product-form__select {
+  min-height: 48px;
+}
+
+.admin-product-form__textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.admin-product-form__input:focus,
+.admin-product-form__select:focus,
+.admin-product-form__textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
+}
+
+.admin-product-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+  padding-top: var(--space-2);
+}
+
+.admin-product-form__submit-button {
+  min-height: 48px;
+  padding: var(--space-3) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-heading);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.admin-product-form__submit-button:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.admin-product-form__submit-button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-product-form__submit-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.admin-product-form__submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 700px) {
+  .admin-product-form__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-product-form__card {
+    padding: var(--space-5);
+  }
+
+  .admin-product-form__form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-product-form__field--wide,
+  .admin-product-form__actions {
+    grid-column: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .admin-product-form__actions {
+    justify-content: stretch;
+  }
+
+  .admin-product-form__submit-button {
+    width: 100%;
+  }
+}

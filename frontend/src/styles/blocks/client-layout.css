@@ -5,7 +5,7 @@
 }
 
 .client-layout__header {
-  padding: 20px var(--page-padding);
+  padding: var(--space-5) var(--page-padding);
   background-color: var(--color-secondary);
   box-shadow: var(--shadow-sm);
 }
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: var(--space-6);
   width: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -23,8 +23,8 @@
 .client-layout__user {
   margin: 0;
   color: var(--color-primary);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.4;
   white-space: nowrap;
 }
@@ -33,16 +33,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
 .client-layout__link {
+  position: relative;
   color: var(--color-surface);
-  font-size: 15px;
-  font-weight: 400;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
   line-height: 1.5;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--transition-fast);
 }
 
 .client-layout__link:hover {
@@ -52,27 +53,42 @@
 .client-layout__link:focus-visible {
   color: var(--color-primary);
   outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  outline-offset: var(--space-1);
   border-radius: var(--radius-sm);
 }
 
 .client-layout__link--active {
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
+}
+
+.client-layout__link--active::after {
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  content: "";
 }
 
 .client-layout__logout {
   min-height: 40px;
-  padding: 8px 14px;
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background-color: transparent;
   color: var(--color-surface);
   font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.4;
   cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .client-layout__logout:hover {
@@ -104,12 +120,12 @@
 
   .client-layout__header-content {
     flex-direction: column;
-    gap: 16px;
+    gap: var(--space-4);
   }
 
   .client-layout__nav {
     flex-wrap: wrap;
-    gap: 12px 20px;
+    gap: var(--space-3) var(--space-5);
   }
 
   .client-layout__main {
@@ -117,6 +133,6 @@
   }
 
   .client-layout__link {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 }

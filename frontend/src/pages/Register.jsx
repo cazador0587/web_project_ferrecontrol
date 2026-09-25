@@ -41,65 +41,100 @@ const Register = () => {
   };
 
   return (
-    <section>
-      <h1>Crear cuenta</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nombre</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+    <section className="auth">
+      <div className="auth__card">
+        <div className="auth__header">
+          <h1 className="auth__title">Crear cuenta</h1>
+          <p className="auth__description">
+            Regístrate para realizar compras y consultar tus pedidos.
+          </p>
         </div>
 
-        <div>
-          <label htmlFor="lastname">Apellidos</label>
-          <input
-            id="lastname"
-            name="lastname"
-            type="text"
-            value={formData.lastname}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form className="auth__form" onSubmit={handleSubmit}>
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="name">
+              Nombre
+            </label>
 
-        <div>
-          <label htmlFor="email">Correo electrónico</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+            <input
+              className="auth__input"
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              autoComplete="given-name"
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password">Contraseña</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            minLength="8"
-            required
-          />
-        </div>
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="lastname">
+              Apellidos
+            </label>
 
-        {error && <p role="alert">{error}</p>}
+            <input
+              className="auth__input"
+              id="lastname"
+              name="lastname"
+              type="text"
+              value={formData.lastname}
+              onChange={handleChange}
+              autoComplete="family-name"
+              required
+            />
+          </div>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
-        </button>
-      </form>
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="email">
+              Correo electrónico
+            </label>
+
+            <input
+              className="auth__input"
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              autoComplete="email"
+              required
+            />
+          </div>
+
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="password">
+              Contraseña
+            </label>
+
+            <input
+              className="auth__input"
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="new-password"
+              minLength="8"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="auth__error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button
+            className="auth__button"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
+          </button>
+        </form>
+      </div>
     </section>
   );
 };

@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
+  gap: var(--space-5);
   width: 100%;
   max-width: 760px;
-  padding: 32px;
+  padding: var(--space-8);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
@@ -14,37 +14,38 @@
 
 .product-detail__title {
   color: var(--color-heading);
-  font-size: 36px;
-  font-weight: 600;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .product-detail__description {
   max-width: 650px;
   color: var(--color-muted);
-  font-size: 17px;
-  font-weight: 400;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
   line-height: 1.6;
 }
 
 .product-detail__sku {
   color: var(--color-muted);
-  font-size: 13px;
-  font-weight: 400;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
   line-height: 1.4;
 }
 
 .product-detail__price {
   color: var(--color-heading);
-  font-size: 30px;
-  font-weight: 600;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
 }
 
 .product-detail__stock {
   color: var(--color-success);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.4;
 }
 
@@ -58,16 +59,20 @@
 
 .product-detail__button {
   min-height: 48px;
-  padding: 12px 24px;
+  padding: var(--space-3) var(--space-6);
   border: 0;
   border-radius: var(--radius-sm);
   background-color: var(--color-primary);
   color: var(--color-heading);
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.5;
   cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .product-detail__button:hover:not(:disabled) {
@@ -92,21 +97,21 @@
 
 .product-detail__message {
   width: 100%;
-  padding: 12px 16px;
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-danger);
   border-radius: var(--radius-sm);
   color: var(--color-danger);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   line-height: 1.5;
 }
 
 @media screen and (max-width: 768px) {
   .product-detail {
-    padding: 24px 20px;
+    padding: var(--space-6) var(--space-5);
   }
 
   .product-detail__title {
-    font-size: 30px;
+    font-size: var(--font-size-3xl);
   }
 }

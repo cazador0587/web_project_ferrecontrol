@@ -48,91 +48,167 @@ const AdminOrders = () => {
       });
   }, []);
 
-  if (isLoading) {
-    return <p>Cargando pedidos...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
   return (
-    <section>
-      <h1>Administrar pedidos</h1>
-      <p>Pedidos registrados: {orderList.length}</p>
+    <section className="admin-orders">
+      <div className="admin-orders__header">
+        <h1 className="admin-orders__title">Administrar pedidos</h1>
 
-      {actionError && <p role="alert">{actionError}</p>}
+        <p className="admin-orders__description">
+          Consulta los pedidos registrados y actualiza su estado.
+        </p>
+      </div>
 
-      {orderList.map((order) => (
-        <article key={order._id}>
-          <h2>Pedido {order._id}</h2>
+      {isLoading && (
+        <p className="admin-orders__message">Cargando pedidos...</p>
+      )}
 
-          <p>Estado: {order.status}</p>
-          <p>Subtotal: ${order.subtotal}</p>
-          <p>Envío: ${order.shipping}</p>
-          <p>Total: ${order.total}</p>
+      {!isLoading && error && (
+        <p
+          className="admin-orders__message admin-orders__message--error"
+          role="alert"
+        >
+          Error: {error}
+        </p>
+      )}
 
-          {order.status === "pending" && (
-            <button
-              type="button"
-              onClick={() => handleStatusChange(order._id, "confirmed")}
-              disabled={updatingOrderIds.has(order._id)}
+      {!isLoading && !error && (
+        <>
+          <div className="admin-orders__summary">
+            <p className="admin-orders__summary-label">Pedidos registrados</p>
+
+            <p className="admin-orders__summary-value">{orderList.length}</p>
+          </div>
+
+          {actionError && (
+            <p
+              className="admin-orders__message admin-orders__message--error"
+              role="alert"
             >
-              {updatingOrderIds.has(order._id)
-                ? "Actualizando..."
-                : "Confirmar pedido"}
-            </button>
+              {actionError}
+            </p>
           )}
 
-          {order.status === "confirmed" && (
-            <button
-              type="button"
-              onClick={() => handleStatusChange(order._id, "preparing")}
-              disabled={updatingOrderIds.has(order._id)}
-            >
-              {updatingOrderIds.has(order._id)
-                ? "Actualizando..."
-                : "Preparar pedido"}
-            </button>
-          )}
+          {orderList.length === 0 ? (
+            <p className="admin-orders__message">No hay pedidos registrados.</p>
+          ) : (
+            <div className="admin-orders__list">
+              {orderList.map((order) => {
+                const isUpdating = updatingOrderIds.has(order._id);
 
-          {order.status === "preparing" && (
-            <button
-              type="button"
-              onClick={() => handleStatusChange(order._id, "shipped")}
-              disabled={updatingOrderIds.has(order._id)}
-            >
-              {updatingOrderIds.has(order._id)
-                ? "Actualizando..."
-                : "Enviar pedido"}
-            </button>
-          )}
+                return (
+                  <article className="admin-orders__card" key={order._id}>
+                    <div className="admin-orders__card-header">
+                      <div>
+                        <h2 className="admin-orders__order-number">
+                          Pedido #{order._id}
+                        </h2>
 
-          {order.status === "shipped" && (
-            <button
-              type="button"
-              onClick={() => handleStatusChange(order._id, "delivered")}
-              disabled={updatingOrderIds.has(order._id)}
-            >
-              {updatingOrderIds.has(order._id)
-                ? "Actualizando..."
-                : "Marcar como entregado"}
-            </button>
-          )}
+                        <p className="admin-orders__status-label">
+                          Estado actual
+                        </p>
+                      </div>
 
-          {["pending", "confirmed", "preparing"].includes(order.status) && (
-            <button
-              type="button"
-              onClick={() => handleStatusChange(order._id, "cancelled")}
-              disabled={updatingOrderIds.has(order._id)}
-            >
-              {updatingOrderIds.has(order._id)
-                ? "Actualizando..."
-                : "Cancelar pedido"}
-            </button>
+                      <span
+                        className={`admin-orders__status admin-orders__status--${order.status}`}
+                      >
+                        {order.status}
+                      </span>
+                    </div>
+
+                    <dl className="admin-orders__details">
+                      <div className="admin-orders__detail">
+                        <dt>Subtotal</dt>
+                        <dd>${order.subtotal}</dd>
+                      </div>
+
+                      <div className="admin-orders__detail">
+                        <dt>Envío</dt>
+                        <dd>${order.shipping}</dd>
+                      </div>
+
+                      <div className="admin-orders__detail admin-orders__detail--total">
+                        <dt>Total</dt>
+                        <dd>${order.total}</dd>
+                      </div>
+                    </dl>
+
+                    <div className="admin-orders__actions">
+                      {order.status === "pending" && (
+                        <button
+                          className="admin-orders__action-button"
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(order._id, "confirmed")
+                          }
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? "Actualizando..." : "Confirmar pedido"}
+                        </button>
+                      )}
+
+                      {order.status === "confirmed" && (
+                        <button
+                          className="admin-orders__action-button"
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(order._id, "preparing")
+                          }
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? "Actualizando..." : "Preparar pedido"}
+                        </button>
+                      )}
+
+                      {order.status === "preparing" && (
+                        <button
+                          className="admin-orders__action-button"
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(order._id, "shipped")
+                          }
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? "Actualizando..." : "Enviar pedido"}
+                        </button>
+                      )}
+
+                      {order.status === "shipped" && (
+                        <button
+                          className="admin-orders__action-button"
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(order._id, "delivered")
+                          }
+                          disabled={isUpdating}
+                        >
+                          {isUpdating
+                            ? "Actualizando..."
+                            : "Marcar como entregado"}
+                        </button>
+                      )}
+
+                      {["pending", "confirmed", "preparing"].includes(
+                        order.status,
+                      ) && (
+                        <button
+                          className="admin-orders__cancel-button"
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(order._id, "cancelled")
+                          }
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? "Actualizando..." : "Cancelar pedido"}
+                        </button>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           )}
-        </article>
-      ))}
+        </>
+      )}
     </section>
   );
 };

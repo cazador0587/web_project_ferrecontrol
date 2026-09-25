@@ -2,6 +2,10 @@
 @import url("../vendor/fonts.css");
 @import url("./variables.css");
 @import url("./blocks/page.css");
+@import url("./blocks/auth.css");
+@import url("./blocks/profile.css");
+@import url("./blocks/orders.css");
+@import url("./blocks/order-confirmation.css");
 @import url("./blocks/public-layout.css");
 @import url("./blocks/home.css");
 @import url("./blocks/products.css");
@@ -11,4 +15,10 @@
 @import url("./blocks/cart.css");
 @import url("./blocks/client-layout.css");
 @import url("./blocks/admin-layout.css");
+@import url("./blocks/admin-dashboard.css");
+@import url("./blocks/admin-products.css");
+@import url("./blocks/admin-product-form.css");
+@import url("./blocks/admin-categories.css");
+@import url("./blocks/admin-orders.css");
+@import url("./blocks/admin-users.css");
 @import url("./blocks/footer.css");

@@ -44,43 +44,66 @@ const Login = () => {
     }
   };
 
-  return (
-    <section>
-      <h1>Iniciar sesión</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Correo electrónico</label>
-
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+    return (
+    <section className="auth">
+      <div className="auth__card">
+        <div className="auth__header">
+          <h1 className="auth__title">Iniciar sesión</h1>
+          <p className="auth__description">
+            Accede a tu cuenta para gestionar tus compras y pedidos.
+          </p>
         </div>
 
-        <div>
-          <label htmlFor="password">Contraseña</label>
+        <form className="auth__form" onSubmit={handleSubmit}>
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="email">
+              Correo electrónico
+            </label>
 
-          <input
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+            <input
+              className="auth__input"
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              autoComplete="email"
+              required
+            />
+          </div>
 
-        {error && <p role="alert">{error}</p>}
+          <div className="auth__field">
+            <label className="auth__label" htmlFor="password">
+              Contraseña
+            </label>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
-        </button>
-      </form>
+            <input
+              className="auth__input"
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="auth__error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button
+            className="auth__button"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
+          </button>
+        </form>
+      </div>
     </section>
   );
 };

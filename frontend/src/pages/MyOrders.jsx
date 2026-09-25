@@ -20,46 +20,94 @@ const MyOrders = () => {
       });
   }, []);
 
-  if (isLoading) {
-    return <p>Cargando pedidos...</p>;
-  }
+    return (
+      <section className="orders">
+        <div className="orders__header">
+          <h1 className="orders__title">Mis pedidos</h1>
+          <p className="orders__description">
+            Consulta el estado y el detalle de tus compras.
+          </p>
+        </div>
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+        {isLoading && <p className="orders__message">Cargando pedidos...</p>}
 
-  if (orderList.length === 0) {
-    return <p>Todavía no tienes pedidos.</p>;
-  }
+        {!isLoading && error && (
+          <p className="orders__message orders__message--error" role="alert">
+            Error: {error}
+          </p>
+        )}
 
-  return (
-    <section>
-      <h1>Mis pedidos</h1>
+        {!isLoading && !error && orderList.length === 0 && (
+          <p className="orders__message">Todavía no tienes pedidos.</p>
+        )}
 
-      {orderList.map((order) => (
-        <article key={order._id}>
-          <h2>Pedido #{order._id}</h2>
+        {!isLoading && !error && orderList.length > 0 && (
+          <div className="orders__list">
+            {orderList.map((order) => (
+              <article className="orders__card" key={order._id}>
+                <div className="orders__card-header">
+                  <h2 className="orders__order-number">Pedido #{order._id}</h2>
 
-          <p>Estado: {order.status}</p>
-          <p>Subtotal: ${order.subtotal}</p>
-          <p>Envío: ${order.shipping}</p>
-          <p>Total: ${order.total}</p>
+                  <span className="orders__status">{order.status}</span>
+                </div>
 
-          <h3>Productos</h3>
+                <dl className="orders__summary">
+                  <div className="orders__summary-item">
+                    <dt>Subtotal</dt>
+                    <dd>${order.subtotal}</dd>
+                  </div>
 
-          {order.items.map((item) => (
-            <div key={`${order._id}-${item.sku}`}>
-              <p>{item.name}</p>
-              <p>SKU: {item.sku}</p>
-              <p>Precio: ${item.price}</p>
-              <p>Cantidad: {item.quantity}</p>
-              <p>Subtotal: ${item.subtotal}</p>
-            </div>
-          ))}
-        </article>
-      ))}
-    </section>
-  );
+                  <div className="orders__summary-item">
+                    <dt>Envío</dt>
+                    <dd>${order.shipping}</dd>
+                  </div>
+
+                  <div className="orders__summary-item orders__summary-item--total">
+                    <dt>Total</dt>
+                    <dd>${order.total}</dd>
+                  </div>
+                </dl>
+
+                <div className="orders__products">
+                  <h3 className="orders__products-title">Productos</h3>
+
+                  <div className="orders__product-list">
+                    {order.items.map((item) => (
+                      <div
+                        className="orders__product"
+                        key={`${order._id}-${item.sku}`}
+                      >
+                        <div className="orders__product-main">
+                          <p className="orders__product-name">{item.name}</p>
+                          <p className="orders__product-sku">SKU: {item.sku}</p>
+                        </div>
+
+                        <dl className="orders__product-details">
+                          <div>
+                            <dt>Precio</dt>
+                            <dd>${item.price}</dd>
+                          </div>
+
+                          <div>
+                            <dt>Cantidad</dt>
+                            <dd>{item.quantity}</dd>
+                          </div>
+
+                          <div>
+                            <dt>Subtotal</dt>
+                            <dd>${item.subtotal}</dd>
+                          </div>
+                        </dl>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+    );
 };
 
 export default MyOrders;

@@ -91,126 +91,197 @@ const AdminProductEdit = () => {
     loadProductData();
   }, [id]);
 
-  if (isLoading) {
-    return <p>Cargando producto...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
   return (
-    <section>
-      <h1>Editar producto</h1>
-      {submitError && <p role="alert">{submitError}</p>}
+    <section className="admin-product-form">
+      <div className="admin-product-form__header">
+        <h1 className="admin-product-form__title">Editar producto</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nombre</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Descripción</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="sku">SKU</label>
-          <input
-            id="sku"
-            name="sku"
-            type="text"
-            value={formData.sku}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="price">Precio</label>
-          <input
-            id="price"
-            name="price"
-            type="number"
-            min="0"
-            step="0.01"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <p className="admin-product-form__description">
+          Actualiza la información, categoría e inventario del producto.
+        </p>
+      </div>
 
-        <div>
-          <label htmlFor="stock">Stock</label>
-          <input
-            id="stock"
-            name="stock"
-            type="number"
-            min="0"
-            step="1"
-            value={formData.stock}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="minStock">Stock mínimo</label>
-          <input
-            id="minStock"
-            name="minStock"
-            type="number"
-            min="0"
-            step="1"
-            value={formData.minStock}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="image">URL de imagen</label>
-          <input
-            id="image"
-            name="image"
-            type="text"
-            value={formData.image}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="category">Categoría</label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="" disabled>
-              Selecciona una categoría
-            </option>
+      {isLoading && (
+        <p className="admin-product-form__message">Cargando producto...</p>
+      )}
 
-            {categoryList.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+      {!isLoading && error && (
+        <p
+          className="admin-product-form__message admin-product-form__message--error"
+          role="alert"
+        >
+          Error: {error}
+        </p>
+      )}
+
+      {!isLoading && !error && (
+        <div className="admin-product-form__card">
+          {submitError && (
+            <p
+              className="admin-product-form__message admin-product-form__message--error"
+              role="alert"
+            >
+              {submitError}
+            </p>
+          )}
+
+          <form className="admin-product-form__form" onSubmit={handleSubmit}>
+            <div className="admin-product-form__field admin-product-form__field--wide">
+              <label className="admin-product-form__label" htmlFor="name">
+                Nombre
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field admin-product-form__field--wide">
+              <label
+                className="admin-product-form__label"
+                htmlFor="description"
+              >
+                Descripción
+              </label>
+
+              <textarea
+                className="admin-product-form__textarea"
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="sku">
+                SKU
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="sku"
+                name="sku"
+                type="text"
+                value={formData.sku}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="category">
+                Categoría
+              </label>
+
+              <select
+                className="admin-product-form__select"
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Selecciona una categoría
+                </option>
+
+                {categoryList.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="price">
+                Precio
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="price"
+                name="price"
+                type="number"
+                min="0"
+                step="0.01"
+                value={formData.price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="stock">
+                Stock
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="stock"
+                name="stock"
+                type="number"
+                min="0"
+                step="1"
+                value={formData.stock}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="minStock">
+                Stock mínimo
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="minStock"
+                name="minStock"
+                type="number"
+                min="0"
+                step="1"
+                value={formData.minStock}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="image">
+                URL de imagen
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="image"
+                name="image"
+                type="text"
+                value={formData.image}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="admin-product-form__actions">
+              <button
+                className="admin-product-form__submit-button"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Guardando cambios..." : "Guardar cambios"}
+              </button>
+            </div>
+          </form>
         </div>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Guardando cambios..." : "Guardar cambios"}
-        </button>
-      </form>
+      )}
     </section>
   );
 };
