@@ -10,6 +10,36 @@ const productSchema = new mongoose.Schema(
       maxlength: 100,
     },
 
+    brand: {
+      type: String,
+      trim: true,
+      maxlength: 50,
+      default: "",
+    },
+    model: {
+      type: String,
+      trim: true,
+      maxlength: 80,
+      default: "",
+    },
+
+    specifications: [
+      {
+        label: {
+          type: String,
+          required: true,
+          trim: true,
+          maxlength: 50,
+        },
+        value: {
+          type: String,
+          required: true,
+          trim: true,
+          maxlength: 100,
+        },
+      },
+    ],
+
     description: {
       type: String,
       required: true,

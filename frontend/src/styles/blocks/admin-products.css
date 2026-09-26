@@ -152,6 +152,13 @@
   line-height: 1.4;
 }
 
+.admin-products__meta {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
 .admin-products__stock-warning {
   flex-shrink: 0;
   padding: var(--space-1) var(--space-2);

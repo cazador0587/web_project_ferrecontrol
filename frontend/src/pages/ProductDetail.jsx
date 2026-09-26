@@ -13,6 +13,7 @@ const ProductDetail = () => {
 
   const [cartMessage, setCartMessage] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     products
@@ -56,36 +57,71 @@ const ProductDetail = () => {
 
   return (
     <section className="product-detail">
-      <h1 className="product-detail__title">{product.name}</h1>
+      <div className="product-detail__media">
+        {product.image && !imageError ? (
+          <img
+            className="product-detail__image"
+            src={product.image}
+            alt={product.name}
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="product-detail__image-placeholder" aria-hidden="true">
+            Sin imagen
+          </div>
+        )}
+      </div>
 
-      <p className="product-detail__description">{product.description}</p>
+      <div className="product-detail__content">
+        <h1 className="product-detail__title">{product.name}</h1>
 
-      <p className="product-detail__sku">SKU: {product.sku}</p>
+        <div className="product-detail__meta">
+          {product.brand && product.brand !== "Genérica" && (
+            <p className="product-detail__brand">
+              Marca: <span>{product.brand}</span>
+            </p>
+          )}
 
-      <p className="product-detail__price">Precio: ${product.price}</p>
+          {product.model && (
+            <p className="product-detail__model">
+              Modelo: <span>{product.model}</span>
+            </p>
+          )}
+        </div>
 
-      <p
-        className={`product-detail__stock ${
-          product.stock === 0
-            ? "product-detail__stock--out"
-            : product.stock <= 5
-              ? "product-detail__stock--low"
-              : ""
-        }`}
-      >
-        Stock disponible: {product.stock}
-      </p>
+        <p className="product-detail__description">{product.description}</p>
 
-      <button
-        className="product-detail__button"
-        type="button"
-        onClick={handleAddToCart}
-        disabled={isAdding || product.stock === 0}
-      >
-        {isAdding ? "Agregando..." : "Agregar al carrito"}
-      </button>
+        <p className="product-detail__sku">SKU: {product.sku}</p>
 
-      {cartMessage && <p className="product-detail__message">{cartMessage}</p>}
+        <p className="product-detail__price">
+          Precio: ${Number(product.price).toFixed(2)}
+        </p>
+
+        <p
+          className={`product-detail__stock ${
+            product.stock === 0
+              ? "product-detail__stock--out"
+              : product.stock <= product.minStock
+                ? "product-detail__stock--low"
+                : ""
+          }`}
+        >
+          Stock disponible: {product.stock}
+        </p>
+
+        <button
+          className="product-detail__button"
+          type="button"
+          onClick={handleAddToCart}
+          disabled={isAdding || product.stock === 0}
+        >
+          {isAdding ? "Agregando..." : "Agregar al carrito"}
+        </button>
+
+        {cartMessage && (
+          <p className="product-detail__message">{cartMessage}</p>
+        )}
+      </div>
     </section>
   );
 };

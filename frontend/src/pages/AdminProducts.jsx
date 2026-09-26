@@ -127,6 +127,18 @@ const AdminProducts = () => {
                           <p className="admin-products__sku">
                             SKU: {product.sku}
                           </p>
+
+                          {product.brand && product.brand !== "Genérica" && (
+                            <p className="admin-products__meta">
+                              Marca: {product.brand}
+                            </p>
+                          )}
+
+                          {product.model && (
+                            <p className="admin-products__meta">
+                              Modelo: {product.model}
+                            </p>
+                          )}
                         </div>
 
                         {isLowStock && (

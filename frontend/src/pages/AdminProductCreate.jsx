@@ -12,6 +12,8 @@ const AdminProductCreate = () => {
   const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
+    brand: "",
+    model: "",
     description: "",
     sku: "",
     price: "",
@@ -116,6 +118,40 @@ const AdminProductCreate = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="brand">
+                Marca
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="brand"
+                name="brand"
+                type="text"
+                maxLength="50"
+                value={formData.brand}
+                onChange={handleChange}
+                placeholder="Ej. Truper"
+              />
+            </div>
+
+            <div className="admin-product-form__field">
+              <label className="admin-product-form__label" htmlFor="model">
+                Modelo
+              </label>
+
+              <input
+                className="admin-product-form__input"
+                id="model"
+                name="model"
+                type="text"
+                maxLength="80"
+                value={formData.model}
+                onChange={handleChange}
+                placeholder="Ej. HSS 1-6 mm"
               />
             </div>
 

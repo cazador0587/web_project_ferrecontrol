@@ -5,8 +5,19 @@ const mongoose = require("mongoose");
 // Crear producto
 const createProduct = async (req, res) => {
   try {
-    const { name, description, sku, price, stock, minStock, image, category } =
-      req.body;
+    const {
+      name,
+      brand,
+      model,
+      specifications,
+      description,
+      sku,
+      price,
+      stock,
+      minStock,
+      image,
+      category,
+    } = req.body;
 
     if (
       !name ||
@@ -42,6 +53,9 @@ const createProduct = async (req, res) => {
 
     const product = await Product.create({
       name,
+      brand,
+      model,
+      specifications,
       description,
       sku,
       price,
@@ -199,6 +213,9 @@ const updateProduct = async (req, res) => {
 
     const {
       name,
+      brand,
+      model,
+      specifications,
       description,
       sku,
       price,
@@ -243,6 +260,9 @@ const updateProduct = async (req, res) => {
       id,
       {
         name,
+        brand,
+        model,
+        specifications,
         description,
         sku,
         price,
@@ -254,7 +274,7 @@ const updateProduct = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     ).populate("category", "name description");
 
     return res.status(200).json({
