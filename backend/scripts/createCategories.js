@@ -32,6 +32,11 @@ const categories = [
     name: "Accesorios",
     description: "Accesorios y complementos para trabajos de ferretería.",
   },
+  {
+    name: "Seguridad",
+    description:
+      "Equipo y accesorios de protección para trabajos de ferretería.",
+  },
 ];
 
 const createCategories = async () => {

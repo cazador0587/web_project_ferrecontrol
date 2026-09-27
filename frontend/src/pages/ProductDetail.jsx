@@ -91,32 +91,53 @@ const ProductDetail = () => {
 
         <p className="product-detail__description">{product.description}</p>
 
+        {product.specifications?.length > 0 && (
+          <div className="product-detail__specifications">
+            <h2 className="product-detail__specifications-title">
+              Especificaciones
+            </h2>
+
+            <dl className="product-detail__specifications-list">
+              {product.specifications.map((specification) => (
+                <div
+                  className="product-detail__specification"
+                  key={specification._id}
+                >
+                  <dt>{specification.label}</dt>
+                  <dd>{specification.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+
         <p className="product-detail__sku">SKU: {product.sku}</p>
 
-        <p className="product-detail__price">
-          Precio: ${Number(product.price).toFixed(2)}
-        </p>
+        <div className="product-detail__purchase">
+          <p className="product-detail__price">
+            Precio: ${Number(product.price).toFixed(2)}
+          </p>
+          <p
+            className={`product-detail__stock ${
+              product.stock === 0
+                ? "product-detail__stock--out"
+                : product.stock <= product.minStock
+                  ? "product-detail__stock--low"
+                  : ""
+            }`}
+          >
+            Stock disponible: {product.stock}
+          </p>
 
-        <p
-          className={`product-detail__stock ${
-            product.stock === 0
-              ? "product-detail__stock--out"
-              : product.stock <= product.minStock
-                ? "product-detail__stock--low"
-                : ""
-          }`}
-        >
-          Stock disponible: {product.stock}
-        </p>
-
-        <button
-          className="product-detail__button"
-          type="button"
-          onClick={handleAddToCart}
-          disabled={isAdding || product.stock === 0}
-        >
-          {isAdding ? "Agregando..." : "Agregar al carrito"}
-        </button>
+          <button
+            className="product-detail__button"
+            type="button"
+            onClick={handleAddToCart}
+            disabled={isAdding || product.stock === 0}
+          >
+            {isAdding ? "Agregando..." : "Agregar al carrito"}
+          </button>
+        </div>
 
         {cartMessage && (
           <p className="product-detail__message">{cartMessage}</p>
