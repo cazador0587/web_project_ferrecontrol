@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { products } from "../services/products";
 import ProductGrid from "../components/ProductGrid";
 import { categories } from "../services/categories";
 
 const Products = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get("categoria");
+  
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  //const [selectedCategory, setSelectedCategory] = useState("");
+
+  const selectedCategory =
+    categoryList.find(
+      (item) => item.name.toLowerCase() === categoryParam?.toLowerCase(),
+    )?._id ?? "";
 
   useEffect(() => {
     const loadCatalog = async () => {
@@ -33,6 +42,21 @@ const Products = () => {
 
     loadCatalog();
   }, []);
+
+  const handleCategoryChange = (event) => {
+    const categoryId = event.target.value;
+
+    if (!categoryId) {
+      setSearchParams({});
+      return;
+    }
+
+    const category = categoryList.find((item) => item._id === categoryId);
+
+    if (category) {
+      setSearchParams({ categoria: category.name });
+    }
+  };
 
   const filteredProducts = productList.filter((product) => {
     const matchesSearch = product.name
@@ -74,7 +98,7 @@ const Products = () => {
           className="products__select"
           aria-label="Filtrar por categoría"
           value={selectedCategory}
-          onChange={(event) => setSelectedCategory(event.target.value)}
+          onChange={handleCategoryChange}
         >
           <option value="">Todas las categorías</option>
 

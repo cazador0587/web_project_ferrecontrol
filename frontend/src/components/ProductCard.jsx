@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, variant = "default" }) => {
   const [imageError, setImageError] = useState(false);
+  const isFeatured = variant === "featured";
 
   const hasImage = Boolean(product.image) && !imageError;
 
   return (
-    <article className="product-card">
+    <article
+      className={`product-card${isFeatured ? " product-card--featured" : ""}`}
+    >
       <div className="product-card__media">
         {hasImage ? (
           <img
@@ -28,10 +31,10 @@ const ProductCard = ({ product }) => {
 
       <p className="product-card__description">{product.description}</p>
 
-      <p className="product-card__sku">SKU: {product.sku}</p>
+      {!isFeatured && <p className="product-card__sku">SKU: {product.sku}</p>}
 
       <p className="product-card__price">
-        Precio: ${Number(product.price).toFixed(2)}
+        {isFeatured ? "" : "Precio: "}${Number(product.price).toFixed(2)}
       </p>
 
       <p
@@ -43,7 +46,13 @@ const ProductCard = ({ product }) => {
               : ""
         }`}
       >
-        Stock: {product.stock}
+        {isFeatured
+          ? product.stock === 0
+            ? "Agotado"
+            : product.stock <= product.minStock
+              ? "Pocas unidades"
+              : "En existencia"
+          : `Stock: ${product.stock}`}
       </p>
 
       <Link className="product-card__link" to={`/productos/${product._id}`}>
