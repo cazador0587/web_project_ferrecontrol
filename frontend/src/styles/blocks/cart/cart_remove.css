@@ -1,0 +1,31 @@
+.cart__remove-button {
+  align-self: flex-start;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-danger);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.cart__remove-button:hover {
+  background-color: var(--color-danger);
+  color: var(--color-surface);
+}
+
+.cart__remove-button:focus-visible {
+  outline: 3px solid var(--color-danger);
+  outline-offset: 3px;
+}
+
+.cart__remove-button:active {
+  transform: translateY(1px);
+}

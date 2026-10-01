@@ -1,0 +1,34 @@
+@media screen and (max-width: 768px) {
+  .home {
+    gap: var(--space-8);
+    padding: var(--space-8) 0;
+  }
+
+  .home__eyebrow {
+    margin-bottom: var(--space-3);
+  }
+
+  .home__description {
+    margin-bottom: var(--space-5);
+    font-size: var(--font-size-md);
+  }
+
+  /* .home__products {
+    height: 310px;
+  }
+
+ .home__product--main {
+    width: 66%;
+    height: 210px;
+  }
+
+  .home__product--top,
+  .home__product--bottom {
+    width: 40%;
+    height: 135px;
+  }
+
+  .home__product-image {
+    padding: var(--space-3);
+  }*/
+}

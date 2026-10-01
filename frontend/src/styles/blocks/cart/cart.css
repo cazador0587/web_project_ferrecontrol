@@ -1,0 +1,23 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.cart__title {
+  color: var(--color-heading);
+  font-size: var(--font-size-4-5xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.cart__total {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-heading);
+  font-size: 28px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+}

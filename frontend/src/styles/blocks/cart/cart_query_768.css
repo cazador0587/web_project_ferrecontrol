@@ -1,0 +1,10 @@
+@media screen and (max-width: 768px) {
+  .cart__title {
+    font-size: var(--font-size-3-5xl);
+  }
+
+  .cart__item {
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+}

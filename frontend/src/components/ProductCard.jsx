@@ -29,7 +29,7 @@ const ProductCard = ({ product, variant = "default" }) => {
 
       <h2 className="product-card__title">{product.name}</h2>
 
-      <p className="product-card__description">{product.description}</p>
+      {/* <p className="product-card__description">{product.description}</p> */}
 
       {!isFeatured && <p className="product-card__sku">SKU: {product.sku}</p>}
 

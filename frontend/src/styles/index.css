@@ -4,21 +4,30 @@
 @import url("./blocks/page.css");
 @import url("./blocks/auth.css");
 @import url("./blocks/profile.css");
-@import url("./blocks/orders.css");
-@import url("./blocks/order-confirmation.css");
-@import url("./blocks/public-layout.css");
-@import url("./blocks/home.css");
-@import url("./blocks/products.css");
-@import url("./blocks/product-grid.css");
-@import url("./blocks/product-card.css");
-@import url("./blocks/product-detail.css");
-@import url("./blocks/cart.css");
-@import url("./blocks/client-layout.css");
-@import url("./blocks/admin-layout.css");
-@import url("./blocks/admin-dashboard.css");
-@import url("./blocks/admin-products.css");
-@import url("./blocks/admin-product-form.css");
-@import url("./blocks/admin-categories.css");
-@import url("./blocks/admin-orders.css");
-@import url("./blocks/admin-users.css");
+@import url("./blocks/orders/orders.css");
+@import url("./blocks/orders/order-confirmation.css");
+@import url("./blocks/layout/public-layout.css");
+/* Home */
+@import url("./blocks/home/home.css");
+@import url("./blocks/home/home_hero.css");
+@import url("./blocks/home/home_categories.css");
+@import url("./blocks/home/home_featured.css");
+/* Home responsive */
+@import url("./blocks/home/home_queries-900.css");
+@import url("./blocks/home/home_queries-768.css");
+@import url("./blocks/home/home_queries-600.css");
+
+@import url("./blocks/product/products.css");
+@import url("./blocks/product/product-grid.css");
+@import url("./blocks/product/product-card.css");
+@import url("./blocks/product/product-detail.css");
+@import url("./blocks/cart/cart.css");
+@import url("./blocks/layout/client-layout.css");
+@import url("./blocks/admin/admin-layout.css");
+@import url("./blocks/admin/admin-dashboard.css");
+@import url("./blocks/admin/admin-products.css");
+@import url("./blocks/admin/admin-product-form.css");
+@import url("./blocks/admin/admin-categories.css");
+@import url("./blocks/admin/admin-orders.css");
+@import url("./blocks/admin/admin-users.css");
 @import url("./blocks/footer.css");
