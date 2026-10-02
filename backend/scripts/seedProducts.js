@@ -438,6 +438,62 @@ const productData = [
     image: "/images/products/tor-002.webp",
     category: "Tornillería",
   },
+
+  {
+    name: "Martillo de uña con mango de fibra",
+    brand: "Genérica",
+    model: "Mango de fibra",
+    specifications: [
+      {
+        label: "Tipo",
+        value: "Martillo de uña",
+      },
+      {
+        label: "Mango",
+        value: "Fibra",
+      },
+      {
+        label: "Uso",
+        value: "Carpintería y construcción",
+      },
+    ],
+    description:
+      "Martillo de uña con mango de fibra para trabajos de carpintería, construcción y reparaciones generales.",
+    sku: "MAR-001",
+    price: 189.9,
+    stock: 16,
+    minStock: 5,
+    image: "/images/products/mar-001.webp",
+    category: "Herramientas",
+  },
+
+  {
+    name: "Martillo de uña con mango tubular",
+    brand: "Genérica",
+    model: "Mango tubular",
+    specifications: [
+      {
+        label: "Tipo",
+        value: "Martillo de uña",
+      },
+      {
+        label: "Mango",
+        value: "Tubular",
+      },
+      {
+        label: "Uso",
+        value: "Carpintería y construcción",
+      },
+    ],
+    description:
+      "Martillo de uña con mango tubular para trabajos de carpintería, construcción y reparaciones generales.",
+    sku: "MAR-002",
+    price: 169.9,
+    stock: 12,
+    minStock: 5,
+    image: "/images/products/mar-002.webp",
+    category: "Herramientas",
+  },
 ];
 
 const seedProducts = async () => {

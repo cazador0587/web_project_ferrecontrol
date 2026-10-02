@@ -79,45 +79,49 @@ const Products = () => {
 
   return (
     <section className="products">
-      <h1 className="products__title">Catálogo de productos</h1>
+      <div className="products__header">
+        <h1 className="products__title">Catálogo de productos</h1>
 
-      <p className="products__description">
-        Explora nuestro catálogo de herramientas, materiales y accesorios.
-      </p>
-      <div className="products__filters">
-        <input
-          className="products__search"
-          type="search"
-          aria-label="Buscar productos"
-          placeholder="Buscar producto..."
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-
-        <select
-          className="products__select"
-          aria-label="Filtrar por categoría"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="">Todas las categorías</option>
-
-          {categoryList.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {filteredProducts.length > 0 && (
-        <p className="products__results">
-          {filteredProducts.length}{" "}
-          {filteredProducts.length === 1
-            ? "producto encontrado"
-            : "productos encontrados"}
+        <p className="products__description">
+          Explora nuestro catálogo de herramientas, materiales y accesorios.
         </p>
-      )}
+      </div>
+      <div className="products__controls">
+        <div className="products__filters">
+          <input
+            className="products__search"
+            type="search"
+            aria-label="Buscar productos"
+            placeholder="Buscar producto..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+          <select
+            className="products__select"
+            aria-label="Filtrar por categoría"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="">Todas las categorías</option>
+
+            {categoryList.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      
+
+        {filteredProducts.length > 0 && (
+          <p className="products__results">
+            {filteredProducts.length}{" "}
+            {filteredProducts.length === 1
+              ? "producto encontrado"
+              : "productos encontrados"}
+          </p>
+        )}
+      </div>
 
       {productList.length === 0 ? (
         <p className="products__empty">No hay productos disponibles.</p>

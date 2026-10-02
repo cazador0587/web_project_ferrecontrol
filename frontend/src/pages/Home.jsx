@@ -38,11 +38,12 @@ const HOME_CATEGORIES = [
   },
 ];
 
+const FEATURED_PRODUCT_SKUS = ["MAR-001", "ELE-001", "SEG-001", "PIN-001"];
+
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [isFeaturedLoading, setIsFeaturedLoading] = useState(true);
   const [featuredError, setFeaturedError] = useState("");
-  const FEATURED_PRODUCT_SKUS = ["MAR-001", "ELE-001", "SEG-001", "PIN-001"];
 
   useEffect(() => {
     const loadFeaturedProducts = async () => {
@@ -86,36 +87,6 @@ const Home = () => {
           </Link>
         </div>
 
-        {/* <div className="home__visual" aria-hidden="true">
-          <div className="home__visual-accent">
-          </div>
-
-          <div className="home__products">
-            <div className="home__product home__product--main">
-              <img
-                className="home__product-image"
-                src="/images/products/mar-002.webp"
-                alt=""
-              />
-            </div>
-
-            <div className="home__product home__product--top">
-              <img
-                className="home__product-image"
-                src="/images/products/seg-002.webp"
-                alt=""
-              />
-            </div>
-
-            <div className="home__product home__product--bottom">
-              <img
-                className="home__product-image"
-                src="/images/products/acc-001.webp"
-                alt=""
-              />
-            </div>
-          </div>
-        </div> */}
         <div className="home__visual" aria-hidden="true">
           <img
             className="home__hero-image"
@@ -123,13 +94,6 @@ const Home = () => {
             alt=""
           />
 
-          {/* <div className="home__hero-accent">
-            <span className="home__hero-accent-line"></span>
-
-            <span className="home__hero-accent-text">
-              Herramientas · Materiales · Soluciones
-            </span>
-          </div>*/}
         </div>
       </section>
 

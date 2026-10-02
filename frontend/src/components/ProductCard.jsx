@@ -27,33 +27,37 @@ const ProductCard = ({ product, variant = "default" }) => {
         )}
       </div>
 
-      <h2 className="product-card__title">{product.name}</h2>
+      <div className="product-card__content">
+        <div className="product-card__info">
+          <h2 className="product-card__title">{product.name}</h2>
 
-      {/* <p className="product-card__description">{product.description}</p> */}
+          {!isFeatured && (
+            <p className="product-card__sku">SKU: {product.sku}</p>
+          )}
+        </div>
 
-      {!isFeatured && <p className="product-card__sku">SKU: {product.sku}</p>}
+        <div className="product-card__purchase">
+          <p className="product-card__price">
+            ${Number(product.price).toFixed(2)}
+          </p>
 
-      <p className="product-card__price">
-        {isFeatured ? "" : "Precio: "}${Number(product.price).toFixed(2)}
-      </p>
-
-      <p
-        className={`product-card__stock ${
-          product.stock === 0
-            ? "product-card__stock--out"
-            : product.stock <= product.minStock
-              ? "product-card__stock--low"
-              : ""
-        }`}
-      >
-        {isFeatured
-          ? product.stock === 0
-            ? "Agotado"
-            : product.stock <= product.minStock
-              ? "Pocas unidades"
-              : "En existencia"
-          : `Stock: ${product.stock}`}
-      </p>
+          <p
+            className={`product-card__stock ${
+              product.stock === 0
+                ? "product-card__stock--out"
+                : product.stock <= product.minStock
+                  ? "product-card__stock--low"
+                  : ""
+            }`}
+          >
+            {product.stock === 0
+              ? "Agotado"
+              : product.stock <= product.minStock
+                ? "Pocas unidades"
+                : "En existencia"}
+          </p>
+        </div>
+      </div>
 
       <Link className="product-card__link" to={`/productos/${product._id}`}>
         Ver producto
