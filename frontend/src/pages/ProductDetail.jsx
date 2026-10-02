@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { products } from "../services/products";
 import { cart } from "../services/cart";
 
@@ -56,94 +56,107 @@ const ProductDetail = () => {
   };
 
   return (
-    <section className="product-detail">
-      <div className="product-detail__media">
-        {product.image && !imageError ? (
-          <img
-            className="product-detail__image"
-            src={product.image}
-            alt={product.name}
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="product-detail__image-placeholder" aria-hidden="true">
-            Sin imagen
-          </div>
-        )}
-      </div>
-
-      <div className="product-detail__content">
-        <h1 className="product-detail__title">{product.name}</h1>
-
-        <div className="product-detail__meta">
-          {product.brand && product.brand !== "Genérica" && (
-            <p className="product-detail__brand">
-              Marca: <span>{product.brand}</span>
-            </p>
-          )}
-
-          {product.model && (
-            <p className="product-detail__model">
-              Modelo: <span>{product.model}</span>
-            </p>
+    <div className="product-detail-page">
+      <Link className="product-detail-page__back" to="/catalogo">
+        ← Volver al catálogo
+      </Link>
+      <section className="product-detail">
+        <div className="product-detail__media">
+          {product.image && !imageError ? (
+            <img
+              className="product-detail__image"
+              src={product.image}
+              alt={product.name}
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div
+              className="product-detail__image-placeholder"
+              aria-hidden="true"
+            >
+              Sin imagen
+            </div>
           )}
         </div>
 
-        <p className="product-detail__description">{product.description}</p>
+        <div className="product-detail__content">
+          <div className="product-detail__info">
+            <h1 className="product-detail__title">{product.name}</h1>
+            <p className="product-detail__sku">SKU: {product.sku}</p>
 
-        {product.specifications?.length > 0 && (
-          <div className="product-detail__specifications">
-            <h2 className="product-detail__specifications-title">
-              Especificaciones
-            </h2>
+            <div className="product-detail__meta">
+              {product.brand && product.brand !== "Genérica" && (
+                <p className="product-detail__brand">
+                  Marca: <span>{product.brand}</span>
+                </p>
+              )}
+            </div>
 
-            <dl className="product-detail__specifications-list">
-              {product.specifications.map((specification) => (
-                <div
-                  className="product-detail__specification"
-                  key={specification._id}
-                >
-                  <dt>{specification.label}</dt>
-                  <dd>{specification.value}</dd>
-                </div>
-              ))}
-            </dl>
+            <p className="product-detail__description">{product.description}</p>
           </div>
-        )}
 
-        <p className="product-detail__sku">SKU: {product.sku}</p>
+          {product.specifications?.length > 0 && (
+            <div className="product-detail__specifications">
+              <h2 className="product-detail__specifications-title">
+                Especificaciones
+              </h2>
 
-        <div className="product-detail__purchase">
-          <p className="product-detail__price">
-            Precio: ${Number(product.price).toFixed(2)}
-          </p>
-          <p
-            className={`product-detail__stock ${
-              product.stock === 0
-                ? "product-detail__stock--out"
+              <dl className="product-detail__specifications-list">
+                {product.model && (
+                  <div className="product-detail__specification">
+                    <dt>Modelo</dt>
+                    <dd>{product.model}</dd>
+                  </div>
+                )}
+                {product.specifications.map((specification) => (
+                  <div
+                    className="product-detail__specification"
+                    key={specification._id}
+                  >
+                    <dt>{specification.label}</dt>
+                    <dd>{specification.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          <div className="product-detail__purchase">
+            <p className="product-detail__price">
+              ${Number(product.price).toFixed(2)}
+            </p>
+            <p
+              className={`product-detail__stock ${
+                product.stock === 0
+                  ? "product-detail__stock--out"
+                  : product.stock <= product.minStock
+                    ? "product-detail__stock--low"
+                    : ""
+              }`}
+            >
+              {product.stock === 0
+                ? "Agotado"
                 : product.stock <= product.minStock
-                  ? "product-detail__stock--low"
-                  : ""
-            }`}
-          >
-            Stock disponible: {product.stock}
-          </p>
+                  ? `Pocas unidades · ${product.stock} disponibles`
+                  : `En existencia · ${product.stock} disponibles`}
+            </p>
 
-          <button
-            className="product-detail__button"
-            type="button"
-            onClick={handleAddToCart}
-            disabled={isAdding || product.stock === 0}
-          >
-            {isAdding ? "Agregando..." : "Agregar al carrito"}
-          </button>
+            <button
+              className="product-detail__button"
+              type="button"
+              onClick={handleAddToCart}
+              disabled={isAdding || product.stock === 0}
+            >
+              {isAdding ? "Agregando..." : "Agregar al carrito"}
+            </button>
+          </div>
+
+          {cartMessage && (
+            <p className="product-detail__message">{cartMessage}</p>
+          )}
         </div>
-
-        {cartMessage && (
-          <p className="product-detail__message">{cartMessage}</p>
-        )}
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
