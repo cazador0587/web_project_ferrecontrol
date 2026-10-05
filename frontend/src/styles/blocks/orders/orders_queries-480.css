@@ -1,0 +1,13 @@
+@media screen and (max-width: 480px) {
+  .orders__card-header {
+    flex-direction: column;
+  }
+
+  .orders__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .orders__product-details {
+    grid-template-columns: 1fr;
+  }
+}

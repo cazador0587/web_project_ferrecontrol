@@ -1,6 +1,23 @@
 import { useEffect, useState } from "react";
 import { orders } from "../services/orders";
 
+const formatPrice = (price) =>
+  Number(price).toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+
+const statusLabels = {
+  pending: "Pendiente",
+  confirmed: "Confirmado",
+  preparing: "En preparación",
+  delivered: "Entregado",
+  cancelled: "Cancelado",
+};
+
+const getStatusLabel = (status) => statusLabels[status] ?? status;
+const formatOrderId = (id) => id.slice(-8).toUpperCase();
+
 const MyOrders = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +46,11 @@ const MyOrders = () => {
           </p>
         </div>
 
-        {isLoading && <p className="orders__message">Cargando pedidos...</p>}
+        {isLoading && (
+          <p className="orders__message" role="status">
+            Cargando pedidos...
+          </p>
+        )}
 
         {!isLoading && error && (
           <p className="orders__message orders__message--error" role="alert">
@@ -46,25 +67,31 @@ const MyOrders = () => {
             {orderList.map((order) => (
               <article className="orders__card" key={order._id}>
                 <div className="orders__card-header">
-                  <h2 className="orders__order-number">Pedido #{order._id}</h2>
+                  <h2 className="orders__order-number">
+                    Pedido #{formatOrderId(order._id)}
+                  </h2>
 
-                  <span className="orders__status">{order.status}</span>
+                  <span
+                    className={`orders__status orders__status--${order.status}`}
+                  >
+                    {getStatusLabel(order.status)}
+                  </span>
                 </div>
 
                 <dl className="orders__summary">
                   <div className="orders__summary-item">
                     <dt>Subtotal</dt>
-                    <dd>${order.subtotal}</dd>
+                    <dd>{formatPrice(order.subtotal)}</dd>
                   </div>
 
                   <div className="orders__summary-item">
                     <dt>Envío</dt>
-                    <dd>${order.shipping}</dd>
+                    <dd>{formatPrice(order.shipping)}</dd>
                   </div>
 
                   <div className="orders__summary-item orders__summary-item--total">
                     <dt>Total</dt>
-                    <dd>${order.total}</dd>
+                    <dd>{formatPrice(order.total)}</dd>
                   </div>
                 </dl>
 
@@ -85,7 +112,7 @@ const MyOrders = () => {
                         <dl className="orders__product-details">
                           <div>
                             <dt>Precio</dt>
-                            <dd>${item.price}</dd>
+                            <dd>{formatPrice(item.price)}</dd>
                           </div>
 
                           <div>
@@ -95,7 +122,7 @@ const MyOrders = () => {
 
                           <div>
                             <dt>Subtotal</dt>
-                            <dd>${item.subtotal}</dd>
+                            <dd>{formatPrice(item.subtotal)}</dd>
                           </div>
                         </dl>
                       </div>

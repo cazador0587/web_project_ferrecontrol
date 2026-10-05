@@ -1,0 +1,47 @@
+.orders__status {
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+}
+
+.orders__status--pending {
+  background-color: color-mix(
+    in srgb,
+    var(--color-warning) 12%,
+    var(--color-surface)
+  );
+  color: var(--color-primary-dark);
+}
+
+.orders__status--confirmed,
+.orders__status--preparing {
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary) 8%,
+    var(--color-surface)
+  );
+  color: var(--color-heading);
+}
+
+.orders__status--delivered {
+  background-color: color-mix(
+    in srgb,
+    var(--color-success) 12%,
+    var(--color-surface)
+  );
+  color: var(--color-success);
+}
+
+.orders__status--cancelled {
+  background-color: color-mix(
+    in srgb,
+    var(--color-danger) 10%,
+    var(--color-surface)
+  );
+  color: var(--color-danger);
+}

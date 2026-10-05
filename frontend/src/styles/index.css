@@ -4,8 +4,16 @@
 @import url("./blocks/page.css");
 @import url("./blocks/auth.css");
 @import url("./blocks/profile.css");
+/* Mis Pedidos */
 @import url("./blocks/orders/orders.css");
-@import url("./blocks/orders/order-confirmation.css");
+@import url("./blocks/orders/orders_confirmation.css");
+@import url("./blocks/orders/orders_product.css");
+@import url("./blocks/orders/orders_summary.css");
+@import url("./blocks/orders/orders_status.css");
+/* Mis pedidos Responsive */
+@import url("./blocks/orders/orders_queries-768.css");
+@import url("./blocks/orders/orders_queries-480.css");
+
 @import url("./blocks/layout/public-layout.css");
 /* Home */
 @import url("./blocks/home/home.css");
@@ -29,7 +37,6 @@
 /* Carrito Responsive*/
 @import url("./blocks/cart/cart_queries-768.css");
 @import url("./blocks/cart/cart_queries-600.css");
-
 @import url("./blocks/layout/client-layout.css");
 @import url("./blocks/admin/admin-layout.css");
 @import url("./blocks/admin/admin-dashboard.css");

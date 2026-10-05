@@ -1,7 +1,3 @@
-@import url("./order_product.css");
-@import url("./order_summary.css");
-@import url("./order-confirmation.css");
-
 .orders {
   display: flex;
   flex-direction: column;
@@ -80,44 +76,4 @@
   font-weight: var(--font-weight-semibold);
   line-height: 1.4;
   overflow-wrap: anywhere;
-}
-
-.orders__status {
-  flex-shrink: 0;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1.5;
-}
-
-@media screen and (max-width: 768px) {
-  .orders__title {
-    font-size: var(--font-size-3xl);
-  }
-
-  .orders__card {
-    padding: var(--space-5);
-  }
-
-  .orders__card-header {
-    flex-direction: column;
-  }
-
-  .orders__summary {
-    grid-template-columns: 1fr;
-  }
-
-  .orders__product {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .orders__product-details {
-    grid-template-columns: 1fr;
-  }
 }
