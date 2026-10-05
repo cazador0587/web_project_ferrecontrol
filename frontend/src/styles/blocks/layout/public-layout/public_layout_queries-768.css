@@ -1,0 +1,28 @@
+@media screen and (max-width: 768px) {
+  .public-layout__main {
+    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
+  }
+
+  .public-layout__header {
+    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
+  }
+
+  .public-layout__header-content {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .public-layout__nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .public-layout__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .public-layout__link {
+    font-size: var(--font-size-sm);
+  }
+}

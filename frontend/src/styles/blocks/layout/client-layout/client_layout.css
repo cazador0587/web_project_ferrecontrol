@@ -112,27 +112,3 @@
   margin: 0 auto;
   padding: var(--section-spacing) var(--page-padding);
 }
-
-@media screen and (max-width: 768px) {
-  .client-layout__header {
-    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
-  }
-
-  .client-layout__header-content {
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .client-layout__nav {
-    flex-wrap: wrap;
-    gap: var(--space-3) var(--space-5);
-  }
-
-  .client-layout__main {
-    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
-  }
-
-  .client-layout__link {
-    font-size: var(--font-size-sm);
-  }
-}

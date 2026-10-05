@@ -13,8 +13,11 @@
 /* Mis pedidos Responsive */
 @import url("./blocks/orders/orders_queries-768.css");
 @import url("./blocks/orders/orders_queries-480.css");
-
-@import url("./blocks/layout/public-layout.css");
+/* Public Layout */
+@import url("./blocks/layout/public-layout/public-layout.css");
+/* Public Layout Responsive */
+@import url("./blocks/layout/public-layout/public_layout_queries-768.css");
+@import url("./blocks/layout/public-layout/public_layout_queries-600.css");
 /* Home */
 @import url("./blocks/home/home.css");
 @import url("./blocks/home/home_hero.css");
@@ -37,7 +40,11 @@
 /* Carrito Responsive*/
 @import url("./blocks/cart/cart_queries-768.css");
 @import url("./blocks/cart/cart_queries-600.css");
-@import url("./blocks/layout/client-layout.css");
+/* Cliente */
+@import url("./blocks/layout/client-layout/client_layout.css");
+/* Cliente Responsive */
+@import url("./blocks/layout/client-layout/client_layout_queries-768.css");
+@import url("./blocks/layout/client-layout/client_layout_queries-480.css");
 @import url("./blocks/admin/admin-layout.css");
 @import url("./blocks/admin/admin-dashboard.css");
 @import url("./blocks/admin/admin-products.css");
