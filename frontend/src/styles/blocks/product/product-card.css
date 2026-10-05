@@ -162,9 +162,3 @@
 .product-card--featured .product-card__link {
   width: 100%;
 }
-
-@media screen and (max-width: 768px) {
-  .product-card__media {
-    aspect-ratio: 16 / 9;
-  }
-}
