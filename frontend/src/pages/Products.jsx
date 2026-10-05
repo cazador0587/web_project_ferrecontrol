@@ -13,7 +13,6 @@ const Products = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  //const [selectedCategory, setSelectedCategory] = useState("");
 
   const selectedCategory =
     categoryList.find(
@@ -70,11 +69,19 @@ const Products = () => {
   });
 
   if (isLoading) {
-    return <p>Cargando productos...</p>;
+    return (
+      <p className="products__status" role="status">
+        Cargando productos...
+      </p>
+    );
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <p className="products__status products__status--error" role="alert">
+        Error: {error}
+      </p>
+    );
   }
 
   return (

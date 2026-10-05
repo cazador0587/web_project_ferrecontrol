@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+const formatPrice = (price) =>
+  Number(price).toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+
 const ProductCard = ({ product, variant = "default" }) => {
   const [imageError, setImageError] = useState(false);
   const isFeatured = variant === "featured";
@@ -37,9 +43,7 @@ const ProductCard = ({ product, variant = "default" }) => {
         </div>
 
         <div className="product-card__purchase">
-          <p className="product-card__price">
-            ${Number(product.price).toFixed(2)}
-          </p>
+          <p className="product-card__price">{formatPrice(product.price)}</p>
 
           <p
             className={`product-card__stock ${
