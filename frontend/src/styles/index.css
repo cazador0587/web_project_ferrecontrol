@@ -16,12 +16,20 @@
 @import url("./blocks/home/home_queries-900.css");
 @import url("./blocks/home/home_queries-768.css");
 @import url("./blocks/home/home_queries-600.css");
-
 @import url("./blocks/product/products.css");
 @import url("./blocks/product/product-grid.css");
 @import url("./blocks/product/product-card.css");
 @import url("./blocks/product/product-detail.css");
+/* Carrito */
 @import url("./blocks/cart/cart.css");
+@import url("./blocks/cart/cart_checkout.css");
+@import url("./blocks/cart/cart_empty.css");
+@import url("./blocks/cart/cart_item.css");
+@import url("./blocks/cart/cart_quantity.css");
+/* Carrito Responsive*/
+@import url("./blocks/cart/cart_queries-768.css");
+@import url("./blocks/cart/cart_queries-600.css");
+
 @import url("./blocks/layout/client-layout.css");
 @import url("./blocks/admin/admin-layout.css");
 @import url("./blocks/admin/admin-dashboard.css");

@@ -1,16 +1,64 @@
 .cart__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--space-6);
   width: 100%;
-  padding: var(--space-6);
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-sm);
 }
 
+.cart__item-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-background);
+}
+
+.cart__item-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cart__item-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.cart__item-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cart__item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.cart__item-info {
+  min-width: 0;
+}
+
 .cart__item-title {
+  margin: 0;
   color: var(--color-heading);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
@@ -18,6 +66,7 @@
 }
 
 .cart__item-sku {
+  margin: var(--space-2) 0 0;
   color: var(--color-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
@@ -25,17 +74,34 @@
 }
 
 .cart__item-price {
+  flex-shrink: 0;
+  margin: 0;
   color: var(--color-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: 1.4;
 }
 
-.cart__item-quantity {
-  color: var(--color-text);
+.cart__item-actions {
+  display: flex;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+.cart__item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.cart__item-subtotal-label {
+  color: var(--color-muted);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.4;
 }
 
 .cart__item-subtotal {
