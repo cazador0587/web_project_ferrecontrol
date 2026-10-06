@@ -3,6 +3,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { products } from "../services/products";
 import { cart } from "../services/cart";
 
+const formatPrice = (price) =>
+  Number(price).toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,15 +36,28 @@ const ProductDetail = () => {
   }, [id]);
 
   if (isLoading) {
-    return <p>Cargando producto...</p>;
+    return (
+      <p className="product-detail-page__status" role="status">
+        Cargando producto...
+      </p>
+    );
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <p
+        className="product-detail-page__status product-detail-page__status--error"
+        role="alert"
+      >
+        Error: {error}
+      </p>
+    );
   }
 
   if (!product) {
-    return <p>Producto no encontrado.</p>;
+    return (
+      <p className="product-detail-page__status">Producto no encontrado.</p>
+    );
   }
 
   const handleAddToCart = async () => {
@@ -95,7 +114,7 @@ const ProductDetail = () => {
             <p className="product-detail__description">{product.description}</p>
           </div>
 
-          {product.specifications?.length > 0 && (
+          {(product.model || product.specifications?.length > 0) && (
             <div className="product-detail__specifications">
               <h2 className="product-detail__specifications-title">
                 Especificaciones
@@ -123,7 +142,7 @@ const ProductDetail = () => {
 
           <div className="product-detail__purchase">
             <p className="product-detail__price">
-              ${Number(product.price).toFixed(2)}
+              {formatPrice(product.price)}
             </p>
             <p
               className={`product-detail__stock ${
@@ -152,7 +171,9 @@ const ProductDetail = () => {
           </div>
 
           {cartMessage && (
-            <p className="product-detail__message">{cartMessage}</p>
+            <p className="product-detail__message" role="alert">
+              {cartMessage}
+            </p>
           )}
         </div>
       </section>

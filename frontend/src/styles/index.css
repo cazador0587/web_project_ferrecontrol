@@ -31,11 +31,15 @@
 @import url("./blocks/product/products.css");
 @import url("./blocks/product/product-grid.css");
 @import url("./blocks/product/product-card.css");
-@import url("./blocks/product/product-detail.css");
 /* Productos Responsive */
 @import url("./blocks/product/product_queries-1024.css");
 @import url("./blocks/product/product_queries-768.css");
 @import url("./blocks/product/product_queries-600.css");
+/* Detalle de producto */
+@import url("./blocks/product/product-detail.css");
+/* Detalle de producto Responsive */
+@import url("./blocks/product/product-detail_queries-768.css");
+@import url("./blocks/product/product-detail_queries-600.css");
 /* Carrito */
 @import url("./blocks/cart/cart.css");
 @import url("./blocks/cart/cart_checkout.css");
