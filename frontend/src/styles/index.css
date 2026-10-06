@@ -2,7 +2,10 @@
 @import url("../vendor/fonts.css");
 @import url("./variables.css");
 @import url("./blocks/page.css");
-@import url("./blocks/auth.css");
+/* Auth */
+@import url("./blocks/auth/auth.css");
+/* Auth Responsive */
+@import url("./blocks/auth/auth_queries-600.css");
 /* Perfil */
 @import url("./blocks/profile/profile.css");
 /* Perfil Responsive */

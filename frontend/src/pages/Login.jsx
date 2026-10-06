@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Login = () => {
@@ -44,7 +44,7 @@ const Login = () => {
     }
   };
 
-    return (
+  return (
     <section className="auth">
       <div className="auth__card">
         <div className="auth__header">
@@ -103,6 +103,12 @@ const Login = () => {
             {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>
         </form>
+        <p className="auth__switch">
+          ¿No tienes una cuenta?{" "}
+          <Link className="auth__link" to="/registro">
+            Crear cuenta
+          </Link>
+        </p>
       </div>
     </section>
   );

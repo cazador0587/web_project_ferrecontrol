@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../services/auth";
 
 const Register = () => {
@@ -134,6 +134,12 @@ const Register = () => {
             {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>
+        <p className="auth__switch">
+          ¿Ya tienes una cuenta?{" "}
+          <Link className="auth__link" to="/login">
+            Iniciar sesión
+          </Link>
+        </p>
       </div>
     </section>
   );
