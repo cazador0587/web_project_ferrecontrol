@@ -16,9 +16,18 @@ const OrderConfirmation = () => {
           Tu pedido fue registrado y se encuentra pendiente de confirmación.
         </p>
 
-        <Link className="order-confirmation__link" to="/catalogo">
-          Seguir comprando
-        </Link>
+        <div className="order-confirmation__actions">
+          <Link className="order-confirmation__link" to="/mis-pedidos">
+            Ver mis pedidos
+          </Link>
+
+          <Link
+            className="order-confirmation__link order-confirmation__link--secondary"
+            to="/catalogo"
+          >
+            Seguir comprando
+          </Link>
+        </div>
       </div>
     </section>
   );

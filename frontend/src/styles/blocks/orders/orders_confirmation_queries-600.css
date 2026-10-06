@@ -1,0 +1,22 @@
+@media screen and (max-width: 600px) {
+  .order-confirmation {
+    padding: var(--space-4) 0;
+  }
+
+  .order-confirmation__card {
+    padding: var(--space-6);
+  }
+
+  .order-confirmation__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .order-confirmation__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .order-confirmation__link {
+    width: 100%;
+  }
+}

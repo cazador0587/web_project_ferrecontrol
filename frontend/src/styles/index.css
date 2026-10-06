@@ -10,6 +10,7 @@
 /* Mis Pedidos */
 @import url("./blocks/orders/orders.css");
 @import url("./blocks/orders/orders_confirmation.css");
+@import url("./blocks/orders/orders_confirmation_queries-600.css");
 @import url("./blocks/orders/orders_product.css");
 @import url("./blocks/orders/orders_summary.css");
 @import url("./blocks/orders/orders_status.css");
