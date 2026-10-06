@@ -1,0 +1,14 @@
+@media screen and (max-width: 600px) {
+  .profile__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .profile__card {
+    padding: var(--space-5);
+  }
+
+  .profile__item {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

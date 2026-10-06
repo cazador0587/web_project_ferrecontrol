@@ -3,7 +3,10 @@
 @import url("./variables.css");
 @import url("./blocks/page.css");
 @import url("./blocks/auth.css");
-@import url("./blocks/profile.css");
+/* Perfil */
+@import url("./blocks/profile/profile.css");
+/* Perfil Responsive */
+@import url("./blocks/profile/profile_queries-600.css");
 /* Mis Pedidos */
 @import url("./blocks/orders/orders.css");
 @import url("./blocks/orders/orders_confirmation.css");
