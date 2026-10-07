@@ -1,0 +1,20 @@
+@media screen and (max-width: 768px) {
+  .admin-products__header {
+    flex-direction: column;
+  }
+
+  .admin-products__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-products__card {
+    flex-direction: column;
+  }
+
+  .admin-products__actions {
+    justify-content: flex-end;
+    padding: var(--space-4) 0 0;
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+}

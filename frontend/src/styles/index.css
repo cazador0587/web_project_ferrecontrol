@@ -74,7 +74,17 @@
 /* Admin Dashboard Responsive */
 @import url("./blocks/admin/admin-dashboard/admin_dashboard_queries-1024.css");
 @import url("./blocks/admin/admin-dashboard/admin_dashboard_queries-600.css");
-@import url("./blocks/admin/admin-products.css");
+/* Admin Products */
+@import url("./blocks/admin/admin-products/admin-products.css");
+@import url("./blocks/admin/admin-products/admin-products__card.css");
+@import url("./blocks/admin/admin-products/admin-products__create.css");
+@import url("./blocks/admin/admin-products/admin-products__summary.css");
+@import url("./blocks/admin/admin-products/admin-products__detail.css");
+@import url("./blocks/admin/admin-products/admin-products__edit-link.css");
+@import url("./blocks/admin/admin-products/admin-products__deactivate.css");
+/* Admin Products Responsive */
+@import url("./blocks/admin/admin-products/admin-products__queries-768.css");
+@import url("./blocks/admin/admin-products/admin-products__queries-520.css");
 @import url("./blocks/admin/admin-product-form.css");
 @import url("./blocks/admin/admin-categories.css");
 @import url("./blocks/admin/admin-orders.css");

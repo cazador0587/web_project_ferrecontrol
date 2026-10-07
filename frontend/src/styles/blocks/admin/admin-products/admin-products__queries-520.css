@@ -1,0 +1,22 @@
+@media screen and (max-width: 520px) {
+  .admin-products__create-link {
+    width: 100%;
+  }
+
+  .admin-products__card-header {
+    flex-direction: column;
+  }
+
+  .admin-products__details {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-products__actions {
+    flex-direction: column;
+  }
+
+  .admin-products__edit-link,
+  .admin-products__deactivate-button {
+    width: 100%;
+  }
+}

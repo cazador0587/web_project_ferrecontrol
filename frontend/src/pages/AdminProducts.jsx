@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { products } from "../services/products";
 
+const priceFormatter = new Intl.NumberFormat("es-MX", {
+  style: "currency",
+  currency: "MXN",
+});
+
 const AdminProducts = () => {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -151,7 +156,7 @@ const AdminProducts = () => {
                       <dl className="admin-products__details">
                         <div className="admin-products__detail">
                           <dt>Precio</dt>
-                          <dd>${product.price}</dd>
+                          <dd>{priceFormatter.format(product.price)}</dd>
                         </div>
 
                         <div className="admin-products__detail">
