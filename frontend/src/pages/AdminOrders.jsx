@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
 import { orders } from "../services/orders";
 
+const priceFormatter = new Intl.NumberFormat("es-MX", {
+  style: "currency",
+  currency: "MXN",
+});
+
+const statusLabels = {
+  pending: "Pendiente",
+  confirmed: "Confirmado",
+  preparing: "En preparación",
+  shipped: "Enviado",
+  delivered: "Entregado",
+  cancelled: "Cancelado",
+};
+
+const getShortOrderId = (id) => id.slice(-8).toUpperCase();
+
 const AdminOrders = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +75,9 @@ const AdminOrders = () => {
       </div>
 
       {isLoading && (
-        <p className="admin-orders__message">Cargando pedidos...</p>
+        <p className="admin-orders__message" role="status">
+          Cargando pedidos...
+        </p>
       )}
 
       {!isLoading && error && (
@@ -100,7 +118,7 @@ const AdminOrders = () => {
                     <div className="admin-orders__card-header">
                       <div>
                         <h2 className="admin-orders__order-number">
-                          Pedido #{order._id}
+                          Pedido #{getShortOrderId(order._id)}
                         </h2>
 
                         <p className="admin-orders__status-label">
@@ -111,24 +129,24 @@ const AdminOrders = () => {
                       <span
                         className={`admin-orders__status admin-orders__status--${order.status}`}
                       >
-                        {order.status}
+                        {statusLabels[order.status] || order.status}
                       </span>
                     </div>
 
                     <dl className="admin-orders__details">
                       <div className="admin-orders__detail">
                         <dt>Subtotal</dt>
-                        <dd>${order.subtotal}</dd>
+                        <dd>{priceFormatter.format(order.subtotal)}</dd>
                       </div>
 
                       <div className="admin-orders__detail">
                         <dt>Envío</dt>
-                        <dd>${order.shipping}</dd>
+                        <dd>{priceFormatter.format(order.shipping)}</dd>
                       </div>
 
                       <div className="admin-orders__detail admin-orders__detail--total">
                         <dt>Total</dt>
-                        <dd>${order.total}</dd>
+                        <dd>{priceFormatter.format(order.total)}</dd>
                       </div>
                     </dl>
 

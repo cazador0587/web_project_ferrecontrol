@@ -104,6 +104,16 @@
 @import url("./blocks/admin/admin-categories/admin-categories__queries-900.css");
 @import url("./blocks/admin/admin-categories/admin-categories__queries-600.css");
 @import url("./blocks/admin/admin-categories/admin-categories__queries-420.css");
-@import url("./blocks/admin/admin-orders.css");
+/* Admin Orders */
+@import url("./blocks/admin/admin-orders/admin-orders.css");
+@import url("./blocks/admin/admin-orders/admin-orders__card.css");
+@import url("./blocks/admin/admin-orders/admin-orders__summary.css");
+@import url("./blocks/admin/admin-orders/admin-orders__detail.css");
+@import url("./blocks/admin/admin-orders/admin-orders__status.css");
+@import url("./blocks/admin/admin-orders/admin-orders__action.css");
+@import url("./blocks/admin/admin-orders/admin-orders__cancel.css");
+/* Admin Orders Responsive */
+@import url("./blocks/admin/admin-orders/admin-orders__queries-600.css");
+/* Admin Users */
 @import url("./blocks/admin/admin-users.css");
 @import url("./blocks/footer.css");

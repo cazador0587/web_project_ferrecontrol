@@ -1,0 +1,29 @@
+.admin-orders__details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+}
+
+.admin-orders__detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.admin-orders__detail dt {
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.admin-orders__detail dd {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.admin-orders__detail--total dd {
+  font-size: var(--font-size-xl);
+}

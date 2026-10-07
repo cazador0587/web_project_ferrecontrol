@@ -1,0 +1,22 @@
+@media screen and (max-width: 600px) {
+  .admin-orders__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-orders__card-header {
+    flex-direction: column;
+  }
+
+  .admin-orders__details {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-orders__actions {
+    flex-direction: column;
+  }
+
+  .admin-orders__action-button,
+  .admin-orders__cancel-button {
+    width: 100%;
+  }
+}

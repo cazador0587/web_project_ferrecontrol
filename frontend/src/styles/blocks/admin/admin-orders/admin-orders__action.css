@@ -1,0 +1,51 @@
+.admin-orders__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-orders__action-button {
+  border: 0;
+  background-color: var(--color-primary);
+  color: var(--color-heading);
+}
+
+.admin-orders__action-button:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.admin-orders__action-button,
+.admin-orders__cancel-button {
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.admin-orders__action-button:focus-visible,
+.admin-orders__cancel-button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-orders__action-button:active:not(:disabled),
+.admin-orders__cancel-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.admin-orders__action-button:disabled,
+.admin-orders__cancel-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
