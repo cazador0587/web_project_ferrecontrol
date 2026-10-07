@@ -16,11 +16,26 @@ const AdminLayout = () => {
     <div className="admin-layout">
       <header className="admin-layout__header">
         <div className="admin-layout__header-content">
-          <h1 className="admin-layout__title">FerreControl</h1>
-          <p className="admin-layout__subtitle">Panel administrativo</p>
-          <p className="admin-layout__user">
-            {user?.name} {user?.lastname}
-          </p>
+          <div className="admin-layout__top">
+            <div className="admin-layout__brand">
+              <h1 className="admin-layout__title">FerreControl</h1>
+              <p className="admin-layout__subtitle">Panel administrativo</p>
+            </div>
+
+            <div className="admin-layout__account">
+              <p className="admin-layout__user">
+                {user?.name} {user?.lastname}
+              </p>
+
+              <button
+                className="admin-layout__logout"
+                type="button"
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
 
           <nav className="admin-layout__nav">
             <NavLink
@@ -78,14 +93,6 @@ const AdminLayout = () => {
               Categorías
             </NavLink>
           </nav>
-
-          <button
-            className="admin-layout__logout"
-            type="button"
-            onClick={handleLogout}
-          >
-            Cerrar sesión
-          </button>
         </div>
       </header>
 

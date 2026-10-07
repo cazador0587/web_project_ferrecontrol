@@ -1,0 +1,41 @@
+@media screen and (max-width: 480px) {
+  .admin-layout__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-4);
+  }
+
+  .admin-layout__brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .admin-layout__account {
+    display: contents;
+  }
+
+  .admin-layout__user {
+    grid-column: 1;
+    grid-row: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .admin-layout__logout {
+    grid-column: 2;
+    grid-row: 1;
+    white-space: nowrap;
+  }
+
+  .admin-layout__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-4);
+    margin-top: var(--space-5);
+  }
+
+  .admin-layout__link {
+    width: fit-content;
+  }
+}

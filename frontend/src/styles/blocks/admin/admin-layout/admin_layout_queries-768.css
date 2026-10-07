@@ -1,0 +1,17 @@
+@media screen and (max-width: 768px) {
+  .admin-layout__header {
+    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
+  }
+
+  .admin-layout__main {
+    padding: var(--section-spacing-mobile) var(--page-padding-mobile);
+  }
+
+  .admin-layout__nav {
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .admin-layout__link {
+    font-size: var(--font-size-sm);
+  }
+}

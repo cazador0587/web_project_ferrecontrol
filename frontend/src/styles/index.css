@@ -61,8 +61,19 @@
 /* Cliente Responsive */
 @import url("./blocks/layout/client-layout/client_layout_queries-768.css");
 @import url("./blocks/layout/client-layout/client_layout_queries-480.css");
-@import url("./blocks/admin/admin-layout.css");
-@import url("./blocks/admin/admin-dashboard.css");
+/* Admin Layout */
+@import url("./blocks/admin/admin-layout/admin-layout.css");
+@import url("./blocks/admin/admin-layout/admin-layout__link.css");
+@import url("./blocks/admin/admin-layout/admin-layout__logout.css");
+/* Admin Layout Responsive */
+@import url("./blocks/admin/admin-layout/admin_layout_queries-768.css");
+@import url("./blocks/admin/admin-layout/admin_layout_queries-480.css");
+/* Admin Dashboard */
+@import url("./blocks/admin/admin-dashboard/admin-dashboard.css");
+@import url("./blocks/admin/admin-dashboard/admin-dashboard__stat.css");
+/* Admin Dashboard Responsive */
+@import url("./blocks/admin/admin-dashboard/admin_dashboard_queries-1024.css");
+@import url("./blocks/admin/admin-dashboard/admin_dashboard_queries-600.css");
 @import url("./blocks/admin/admin-products.css");
 @import url("./blocks/admin/admin-product-form.css");
 @import url("./blocks/admin/admin-categories.css");

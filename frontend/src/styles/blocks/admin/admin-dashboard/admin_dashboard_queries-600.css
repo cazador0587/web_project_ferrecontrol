@@ -1,0 +1,25 @@
+@media screen and (max-width: 600px) {
+  .admin-dashboard {
+    gap: var(--space-6);
+  }
+
+  .admin-dashboard__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-dashboard__subtitle {
+    font-size: var(--font-size-xl);
+  }
+
+  .admin-dashboard__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-dashboard__stat {
+    min-height: auto;
+  }
+
+  .admin-dashboard__stat-value {
+    font-size: var(--font-size-3xl);
+  }
+}
