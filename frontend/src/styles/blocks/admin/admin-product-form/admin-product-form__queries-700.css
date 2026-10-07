@@ -1,0 +1,18 @@
+@media screen and (max-width: 700px) {
+  .admin-product-form__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-product-form__card {
+    padding: var(--space-5);
+  }
+
+  .admin-product-form__form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-product-form__field--wide,
+  .admin-product-form__actions {
+    grid-column: auto;
+  }
+}

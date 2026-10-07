@@ -1,0 +1,35 @@
+.admin-product-form__submit-button {
+  min-height: 48px;
+  padding: var(--space-3) var(--space-6);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-heading);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.admin-product-form__submit-button:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.admin-product-form__submit-button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-product-form__submit-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.admin-product-form__submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

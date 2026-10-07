@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { products } from "../services/products";
 import { categories } from "../services/categories";
 
@@ -309,6 +309,12 @@ const AdminProductEdit = () => {
             </div>
 
             <div className="admin-product-form__actions">
+              <Link
+                className="admin-product-form__cancel-link"
+                to="/admin/productos"
+              >
+                Cancelar
+              </Link>
               <button
                 className="admin-product-form__submit-button"
                 type="submit"

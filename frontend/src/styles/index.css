@@ -85,7 +85,13 @@
 /* Admin Products Responsive */
 @import url("./blocks/admin/admin-products/admin-products__queries-768.css");
 @import url("./blocks/admin/admin-products/admin-products__queries-520.css");
-@import url("./blocks/admin/admin-product-form.css");
+/* Admin Product Form */
+@import url("./blocks/admin/admin-product-form/admin-product-form.css");
+@import url("./blocks/admin/admin-product-form/admin-product-form__cancel.css");
+@import url("./blocks/admin/admin-product-form/admin-product-form__submit.css");
+/* Admin Product Form Responsive */
+@import url("./blocks/admin/admin-product-form/admin-product-form__queries-700.css");
+@import url("./blocks/admin/admin-product-form/admin-product-form__queries-480.css");
 @import url("./blocks/admin/admin-categories.css");
 @import url("./blocks/admin/admin-orders.css");
 @import url("./blocks/admin/admin-users.css");
