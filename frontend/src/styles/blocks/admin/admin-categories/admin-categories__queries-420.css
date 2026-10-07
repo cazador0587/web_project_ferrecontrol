@@ -1,0 +1,13 @@
+@media screen and (max-width: 420px) {
+  .admin-categories__form-actions,
+  .admin-categories__actions {
+    flex-direction: column;
+  }
+
+  .admin-categories__submit-button,
+  .admin-categories__cancel-button,
+  .admin-categories__edit-button,
+  .admin-categories__delete-button {
+    width: 100%;
+  }
+}

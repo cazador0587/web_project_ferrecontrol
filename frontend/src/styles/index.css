@@ -92,7 +92,18 @@
 /* Admin Product Form Responsive */
 @import url("./blocks/admin/admin-product-form/admin-product-form__queries-700.css");
 @import url("./blocks/admin/admin-product-form/admin-product-form__queries-480.css");
-@import url("./blocks/admin/admin-categories.css");
+/* Admin Categories */
+@import url("./blocks/admin/admin-categories/admin-categories.css");
+@import url("./blocks/admin/admin-categories/admin-categories__card.css");
+@import url("./blocks/admin/admin-categories/admin-categories__form.css");
+@import url("./blocks/admin/admin-categories/admin-categories__input.css");
+@import url("./blocks/admin/admin-categories/admin-categories__submit.css");
+@import url("./blocks/admin/admin-categories/admin-categories__category.css");
+@import url("./blocks/admin/admin-categories/admin-categories__message.css");
+/* Admin Categories Responsive */
+@import url("./blocks/admin/admin-categories/admin-categories__queries-900.css");
+@import url("./blocks/admin/admin-categories/admin-categories__queries-600.css");
+@import url("./blocks/admin/admin-categories/admin-categories__queries-420.css");
 @import url("./blocks/admin/admin-orders.css");
 @import url("./blocks/admin/admin-users.css");
 @import url("./blocks/footer.css");

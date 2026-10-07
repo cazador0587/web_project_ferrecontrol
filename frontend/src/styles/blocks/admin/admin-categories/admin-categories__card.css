@@ -1,0 +1,21 @@
+.admin-categories__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-categories__card:first-child {
+  padding-top: 0;
+}
+
+.admin-categories__card:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.admin-categories__card-content {
+  min-width: 0;
+}

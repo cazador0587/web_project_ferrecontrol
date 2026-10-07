@@ -107,7 +107,9 @@ const AdminCategories = () => {
       </div>
 
       {isLoading && (
-        <p className="admin-categories__message">Cargando categorías...</p>
+        <p className="admin-categories__message" role="status">
+          Cargando categorías...
+        </p>
       )}
 
       {!isLoading && loadError && (
@@ -248,6 +250,11 @@ const AdminCategories = () => {
                             setEditingId(category._id);
                             setName(category.name);
                             setDescription(category.description || "");
+
+                            window.scrollTo({
+                              top: 0,
+                              behavior: "smooth",
+                            });
                           }}
                         >
                           Editar

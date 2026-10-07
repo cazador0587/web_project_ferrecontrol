@@ -1,0 +1,10 @@
+.admin-categories__submit-button {
+  min-height: 44px;
+  border: 0;
+  background-color: var(--color-primary);
+  color: var(--color-heading);
+}
+
+.admin-categories__submit-button:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}

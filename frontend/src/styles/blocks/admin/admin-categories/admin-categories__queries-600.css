@@ -1,0 +1,19 @@
+@media screen and (max-width: 600px) {
+  .admin-categories__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-categories__form-card,
+  .admin-categories__list-section {
+    padding: var(--space-5);
+  }
+
+  .admin-categories__card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-categories__actions {
+    justify-content: flex-end;
+  }
+}
