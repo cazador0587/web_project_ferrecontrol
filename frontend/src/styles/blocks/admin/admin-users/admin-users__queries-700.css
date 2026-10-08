@@ -1,0 +1,25 @@
+@media screen and (max-width: 700px) {
+  .admin-users__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .admin-users__card {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .admin-users__role {
+    grid-template-columns: 1fr;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .admin-users__select {
+    width: 100%;
+  }
+
+  .admin-users__updating {
+    grid-column: 1;
+  }
+}

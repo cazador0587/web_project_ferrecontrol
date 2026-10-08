@@ -24,30 +24,30 @@ const AdminUsers = () => {
   }, []);
 
   const handleRoleChange = async (id, role) => {
-  try {
-    setActionError("");
+    try {
+      setActionError("");
 
-    setUpdatingUserIds((currentIds) => {
-      const nextIds = new Set(currentIds);
-      nextIds.add(id);
-      return nextIds;
-    });
+      setUpdatingUserIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.add(id);
+        return nextIds;
+      });
 
-    const data = await auth.updateUserRole(id, role);
+      const data = await auth.updateUserRole(id, role);
 
-    setUserList((currentUsers) =>
-      currentUsers.map((user) => (user._id === id ? data.user : user)),
-    );
-  } catch (error) {
-    setActionError(error.message);
-  } finally {
-    setUpdatingUserIds((currentIds) => {
-      const nextIds = new Set(currentIds);
-      nextIds.delete(id);
-      return nextIds;
-    });
-  }
-};
+      setUserList((currentUsers) =>
+        currentUsers.map((user) => (user._id === id ? data.user : user)),
+      );
+    } catch (error) {
+      setActionError(error.message);
+    } finally {
+      setUpdatingUserIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        nextIds.delete(id);
+        return nextIds;
+      });
+    }
+  };
 
   return (
     <section className="admin-users">
@@ -60,7 +60,9 @@ const AdminUsers = () => {
       </div>
 
       {isLoading && (
-        <p className="admin-users__message">Cargando usuarios...</p>
+        <p className="admin-users__message" role="status">
+          Cargando usuarios...
+        </p>
       )}
 
       {!isLoading && error && (

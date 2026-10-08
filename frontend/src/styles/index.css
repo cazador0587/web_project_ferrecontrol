@@ -115,5 +115,11 @@
 /* Admin Orders Responsive */
 @import url("./blocks/admin/admin-orders/admin-orders__queries-600.css");
 /* Admin Users */
-@import url("./blocks/admin/admin-users.css");
+@import url("./blocks/admin/admin-users/admin-users.css");
+@import url("./blocks/admin/admin-users/admin-users__cards.css");
+@import url("./blocks/admin/admin-users/admin-users__roles.css");
+@import url("./blocks/admin/admin-users/admin-users__summary.css");
+@import url("./blocks/admin/admin-users/admin-users__message.css");
+/* Admin Users Responsive */
+@import url("./blocks/admin/admin-users/admin-users__queries-700.css");
 @import url("./blocks/footer.css");
