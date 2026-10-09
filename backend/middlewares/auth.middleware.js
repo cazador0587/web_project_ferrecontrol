@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
 
@@ -20,12 +21,34 @@ const authMiddleware = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = decoded;
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        message: "La sesión ya no es válida",
+      });
+    }
+
+    req.user = {
+      id: user._id.toString(),
+      role: user.role,
+    };
 
     next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Token inválido o expirado",
+    if (
+      error.name === "JsonWebTokenError" ||
+      error.name === "TokenExpiredError"
+    ) {
+      return res.status(401).json({
+        message: "Token inválido o expirado",
+      });
+    }
+
+    console.error("Error en middleware de autenticación:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
     });
   }
 };

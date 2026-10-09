@@ -18,6 +18,10 @@ const request = async (endpoint, options = {}) => {
   const data = await response.json();
 
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      window.dispatchEvent(new Event("ferrecontrol:session-expired"));
+    }
+
     throw new Error(data.message || "Error en la solicitud");
   }
 

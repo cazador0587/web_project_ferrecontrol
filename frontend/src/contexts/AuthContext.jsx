@@ -22,6 +22,24 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const handleSessionExpired = () => {
+      logout();
+    };
+
+    window.addEventListener(
+      "ferrecontrol:session-expired",
+      handleSessionExpired,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "ferrecontrol:session-expired",
+        handleSessionExpired,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
     const token = getToken();
 
     if (!token) {
