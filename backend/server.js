@@ -38,6 +38,26 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// Manejar rutas inexistentes
+app.use((req, res) => {
+  return res.status(404).json({
+    message: "La ruta solicitada no existe",
+  });
+});
+
+// Manejar errores inesperados
+app.use((err, req, res, next) => {
+  console.error("Error del servidor:", err);
+
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  return res.status(500).json({
+    message: "Error interno del servidor",
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`FerreControl API ejecutándose en http://localhost:${PORT}`);
