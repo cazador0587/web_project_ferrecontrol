@@ -1,10 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const User = require("../models/User");
 
 const register = async (req, res) => {
   try {
-    const { name, lastname, email, password } = req.body;
+    const { name, lastname, email, password } = req.body ?? {};
 
     // Validar que todos los campos estén presentes
     if (!name || !lastname || !email || !password) {
@@ -13,8 +14,40 @@ const register = async (req, res) => {
       });
     }
 
+    // Validar el tipo de los campos recibidos
+    if (
+      typeof name !== "string" ||
+      typeof lastname !== "string" ||
+      typeof email !== "string" ||
+      typeof password !== "string"
+    ) {
+      return res.status(400).json({
+        message: "Los campos deben contener texto válido",
+      });
+    }
+
+    // Normalizar y validar el correo electrónico
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(normalizedEmail)) {
+      return res.status(400).json({
+        message: "El formato del correo electrónico no es válido",
+      });
+    }
+
+    // Validar la longitud mínima de la contraseña original
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "La contraseña debe tener al menos 8 caracteres",
+      });
+    }
+
     // Verificar si el correo ya está registrado
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      email: normalizedEmail,
+    });
 
     if (existingUser) {
       return res.status(409).json({
@@ -29,7 +62,7 @@ const register = async (req, res) => {
     const user = await User.create({
       name,
       lastname,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
     });
 
@@ -45,6 +78,13 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
+    // Manejar correos duplicados detectados por MongoDB
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "El correo electrónico ya está registrado",
+      });
+    }
+
     console.error("Error al registrar usuario:", error);
 
     return res.status(500).json({
@@ -55,7 +95,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body ?? {};
 
     // Validar que todos los campos estén presentes
     if (!email || !password) {
@@ -64,8 +104,18 @@ const login = async (req, res) => {
       });
     }
 
+    // Validar los tipos de datos
+    if (typeof email !== "string" || typeof password !== "string") {
+      return res.status(400).json({
+        message: "El correo y la contraseña deben ser texto válido",
+      });
+    }
+
+    // Normalizar el correo electrónico
+    const normalizedEmail = email.trim().toLowerCase();
+
     // Buscar usuario incluyendo la contraseña
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email: normalizedEmail }).select("+password");
 
     if (!user) {
       return res.status(401).json({
@@ -160,7 +210,9 @@ const getUserCount = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ createdAt: -1 });
+    const users = await User.find()
+      .select("name lastname email role createdAt updatedAt")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({
       users,
@@ -177,7 +229,14 @@ const getUsers = async (req, res) => {
 const updateUserRole = async (req, res) => {
   try {
     const { id } = req.params;
-    const { role } = req.body;
+    const { role } = req.body ?? {};
+
+    // Validar el identificador del usuario
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        message: "Identificador de usuario no válido",
+      });
+    }
 
     if (id === req.user.id) {
       return res.status(400).json({
@@ -194,11 +253,8 @@ const updateUserRole = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       id,
       { role },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+      { new: true, runValidators: true },
+    ).select("name lastname email role createdAt updatedAt");
 
     if (!user) {
       return res.status(404).json({
