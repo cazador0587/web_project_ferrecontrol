@@ -2,6 +2,27 @@ const Product = require("../models/Product");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
 
+// Escapar caracteres especiales para búsquedas literales con regex
+const escapeRegex = (value) => {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+
+const normalizeSku = (value) => value.trim().toUpperCase();
+
+const isValidProductPrice = (value) => {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value) &&
+    value >= 0.01 &&
+    Number.isSafeInteger(Math.round(value * 100)) &&
+    Math.abs(value * 100 - Math.round(value * 100)) < 1e-8
+  );
+};
+
+const isValidStock = (value) => {
+  return Number.isSafeInteger(value) && value >= 0;
+};
+
 // Crear producto
 const createProduct = async (req, res) => {
   try {
@@ -17,7 +38,7 @@ const createProduct = async (req, res) => {
       minStock,
       image,
       category,
-    } = req.body;
+    } = req.body ?? {};
 
     if (
       !name ||
@@ -33,8 +54,57 @@ const createProduct = async (req, res) => {
       });
     }
 
+    // Validar los tipos de los campos principales
+    if (
+      typeof name !== "string" ||
+      typeof description !== "string" ||
+      typeof sku !== "string" ||
+      typeof category !== "string"
+    ) {
+      return res.status(400).json({
+        message: "Los campos principales deben contener texto válido",
+      });
+    }
+
+    const normalizedSku = normalizeSku(sku);
+
+    if (!normalizedSku) {
+      return res.status(400).json({
+        message: "El SKU no puede estar vacío",
+      });
+    }
+
+    // Validar el identificador de la categoría
+    if (!mongoose.isValidObjectId(category)) {
+      return res.status(400).json({
+        message: "Identificador de categoría no válido",
+      });
+    }
+
+    // Validar el precio del producto
+    if (!isValidProductPrice(price)) {
+      return res.status(400).json({
+        message: "El precio debe ser un número válido mayor o igual a 0.01",
+      });
+    }
+
+    // Validar la cantidad disponible en inventario
+    if (stock !== undefined && !isValidStock(stock)) {
+      return res.status(400).json({
+        message: "El stock debe ser un número entero mayor o igual a cero",
+      });
+    }
+
+    // Validar el stock mínimo del producto
+    if (minStock !== undefined && !isValidStock(minStock)) {
+      return res.status(400).json({
+        message:
+          "El stock mínimo debe ser un número entero mayor o igual a cero",
+      });
+    }
+
     const existingProduct = await Product.findOne({
-      sku: sku.toUpperCase(),
+      sku: normalizedSku,
     });
 
     if (existingProduct) {
@@ -57,7 +127,7 @@ const createProduct = async (req, res) => {
       model,
       specifications,
       description,
-      sku,
+      sku: normalizedSku,
       price,
       stock,
       minStock,
@@ -70,6 +140,20 @@ const createProduct = async (req, res) => {
       product,
     });
   } catch (error) {
+    // Detectar conflictos de índices únicos en MongoDB
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "El SKU ya está registrado",
+      });
+    }
+
+    // Detectar errores de validación de Mongoose
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: "Los datos del producto no son válidos",
+      });
+    }
+
     console.error("Error al crear producto:", error);
 
     return res.status(500).json({
@@ -83,45 +167,108 @@ const getProducts = async (req, res) => {
   try {
     const { search, category, minPrice, maxPrice } = req.query;
 
-    // Validar precios
-    if (minPrice !== undefined && Number.isNaN(Number(minPrice))) {
+    // Validar que el parámetro de búsqueda sea un único texto
+    if (search !== undefined && typeof search !== "string") {
+      return res.status(400).json({
+        message: "El parámetro de búsqueda debe ser un texto válido",
+      });
+    }
+
+    // Limitar la longitud de las búsquedas del catálogo
+    if (typeof search === "string" && search.trim().length > 100) {
+      return res.status(400).json({
+        message: "La búsqueda no puede superar los 100 caracteres",
+      });
+    }
+
+    // Validar primero el tipo y el formato de los filtros de precio
+    const decimalPricePattern = /^\d+(?:\.\d{1,2})?$/;
+
+    if (minPrice !== undefined) {
+      if (typeof minPrice !== "string" || minPrice.trim() === "") {
+        return res.status(400).json({
+          message: "El precio mínimo debe ser un número válido",
+        });
+      }
+
+      if (!decimalPricePattern.test(minPrice)) {
+        return res.status(400).json({
+          message: "El precio mínimo debe tener un formato decimal válido",
+        });
+      }
+    }
+
+    if (maxPrice !== undefined) {
+      if (typeof maxPrice !== "string" || maxPrice.trim() === "") {
+        return res.status(400).json({
+          message: "El precio máximo debe ser un número válido",
+        });
+      }
+
+      if (!decimalPricePattern.test(maxPrice)) {
+        return res.status(400).json({
+          message: "El precio máximo debe tener un formato decimal válido",
+        });
+      }
+    }
+
+    // Convertir únicamente después de validar el formato
+    const parsedMinPrice =
+      minPrice !== undefined ? Number(minPrice) : undefined;
+
+    const parsedMaxPrice =
+      maxPrice !== undefined ? Number(maxPrice) : undefined;
+
+    if (parsedMinPrice !== undefined && !Number.isFinite(parsedMinPrice)) {
       return res.status(400).json({
         message: "El precio mínimo debe ser un número válido",
       });
     }
 
-    if (maxPrice !== undefined && Number.isNaN(Number(maxPrice))) {
+    if (parsedMaxPrice !== undefined && !Number.isFinite(parsedMaxPrice)) {
       return res.status(400).json({
         message: "El precio máximo debe ser un número válido",
       });
     }
 
-    if (minPrice !== undefined && Number(minPrice) < 0) {
-      return res.status(400).json({
-        message: "El precio mínimo no puede ser negativo",
-      });
-    }
-
-    if (maxPrice !== undefined && Number(maxPrice) < 0) {
-      return res.status(400).json({
-        message: "El precio máximo no puede ser negativo",
-      });
-    }
-
     if (
-      minPrice !== undefined &&
-      maxPrice !== undefined &&
-      Number(minPrice) > Number(maxPrice)
+      parsedMinPrice !== undefined &&
+      parsedMaxPrice !== undefined &&
+      parsedMinPrice > parsedMaxPrice
     ) {
       return res.status(400).json({
         message: "El precio mínimo no puede ser mayor que el precio máximo",
       });
     }
 
-    // Validar categoría
-    if (category && !mongoose.isValidObjectId(category)) {
+    // Validar la categoría cuando se incluya en los filtros
+    if (
+      category !== undefined &&
+      (typeof category !== "string" ||
+        category.trim() === "" ||
+        !mongoose.isValidObjectId(category))
+    ) {
       return res.status(400).json({
         message: "El ID de categoría no es válido",
+      });
+    }
+
+    // Evitar pérdida de precisión en los filtros de precio
+    if (
+      parsedMinPrice !== undefined &&
+      !Number.isSafeInteger(Math.round(parsedMinPrice * 100))
+    ) {
+      return res.status(400).json({
+        message: "El precio mínimo supera el límite de precisión permitido",
+      });
+    }
+
+    if (
+      parsedMaxPrice !== undefined &&
+      !Number.isSafeInteger(Math.round(parsedMaxPrice * 100))
+    ) {
+      return res.status(400).json({
+        message: "El precio máximo supera el límite de precisión permitido",
       });
     }
 
@@ -129,20 +276,12 @@ const getProducts = async (req, res) => {
       isActive: { $ne: false },
     };
 
-    if (search) {
+    if (typeof search === "string" && search.trim()) {
+      const safeSearch = escapeRegex(search.trim());
+
       filter.$or = [
-        {
-          name: {
-            $regex: search,
-            $options: "i",
-          },
-        },
-        {
-          sku: {
-            $regex: search,
-            $options: "i",
-          },
-        },
+        { name: { $regex: safeSearch, $options: "i" } },
+        { sku: { $regex: safeSearch, $options: "i" } },
       ];
     }
 
@@ -153,12 +292,12 @@ const getProducts = async (req, res) => {
     if (minPrice !== undefined || maxPrice !== undefined) {
       filter.price = {};
 
-      if (minPrice !== undefined) {
-        filter.price.$gte = Number(minPrice);
+      if (parsedMinPrice !== undefined) {
+        filter.price.$gte = parsedMinPrice;
       }
 
-      if (maxPrice !== undefined) {
-        filter.price.$lte = Number(maxPrice);
+      if (parsedMaxPrice !== undefined) {
+        filter.price.$lte = parsedMaxPrice;
       }
     }
 
@@ -182,6 +321,12 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        message: "Identificador de producto no válido",
+      });
+    }
 
     const product = await Product.findById(id).populate(
       "category",
@@ -210,6 +355,11 @@ const getProductById = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        message: "Identificador de producto no válido",
+      });
+    }
 
     const {
       name,
@@ -223,7 +373,7 @@ const updateProduct = async (req, res) => {
       minStock,
       image,
       category,
-    } = req.body;
+    } = req.body ?? {};
 
     const product = await Product.findById(id);
 
@@ -233,9 +383,58 @@ const updateProduct = async (req, res) => {
       });
     }
 
-    if (sku && sku.toUpperCase() !== product.sku) {
+    // Validar los tipos de los campos de texto enviados
+    if (
+      (name !== undefined && typeof name !== "string") ||
+      (description !== undefined && typeof description !== "string") ||
+      (sku !== undefined && typeof sku !== "string") ||
+      (category !== undefined && typeof category !== "string")
+    ) {
+      return res.status(400).json({
+        message: "Los campos principales deben contener texto válido",
+      });
+    }
+
+    const normalizedSku = sku !== undefined ? normalizeSku(sku) : undefined;
+
+    if (normalizedSku !== undefined && !normalizedSku) {
+      return res.status(400).json({
+        message: "El SKU no puede estar vacío",
+      });
+    }
+
+    // Validar el stock mínimo cuando se envíe
+    if (minStock !== undefined && !isValidStock(minStock)) {
+      return res.status(400).json({
+        message:
+          "El stock mínimo debe ser un número entero mayor o igual a cero",
+      });
+    }
+
+    // Validar el stock cuando se envíe
+    if (stock !== undefined && !isValidStock(stock)) {
+      return res.status(400).json({
+        message: "El stock debe ser un número entero mayor o igual a cero",
+      });
+    }
+
+    // Validar el precio cuando se envíe
+    if (price !== undefined && !isValidProductPrice(price)) {
+      return res.status(400).json({
+        message: "El precio debe ser un número válido mayor o igual a 0.01",
+      });
+    }
+
+    // Validar el identificador de la categoría cuando se envíe
+    if (category !== undefined && !mongoose.isValidObjectId(category)) {
+      return res.status(400).json({
+        message: "Identificador de categoría no válido",
+      });
+    }
+
+    if (normalizedSku !== undefined && normalizedSku !== product.sku) {
       const existingProduct = await Product.findOne({
-        sku: sku.toUpperCase(),
+        sku: normalizedSku,
         _id: { $ne: id },
       });
 
@@ -264,7 +463,7 @@ const updateProduct = async (req, res) => {
         model,
         specifications,
         description,
-        sku,
+        sku: normalizedSku,
         price,
         stock,
         minStock,
@@ -282,6 +481,20 @@ const updateProduct = async (req, res) => {
       product: updatedProduct,
     });
   } catch (error) {
+    // Detectar conflictos de índices únicos en MongoDB
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "El SKU ya está registrado",
+      });
+    }
+
+    // Detectar errores de validación de Mongoose
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: "Los datos del producto no son válidos",
+      });
+    }
+
     console.error("Error al actualizar producto:", error);
 
     return res.status(500).json({
@@ -293,8 +506,16 @@ const updateProduct = async (req, res) => {
 // Eliminar producto
 const deleteProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        message: "Identificador de producto no válido",
+      });
+    }
+
     const product = await Product.findByIdAndUpdate(
-      req.params.id,
+      id,
       { isActive: false },
       {
         new: true,
@@ -313,9 +534,10 @@ const deleteProduct = async (req, res) => {
       product,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Error al desactivar el producto",
-      error: error.message,
+    console.error("Error al desactivar producto:", error);
+
+    return res.status(500).json({
+      message: "Error interno del servidor",
     });
   }
 };
