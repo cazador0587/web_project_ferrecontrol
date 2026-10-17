@@ -13,11 +13,18 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-// Conectar a MongoDB
-connectDatabase();
-
 // Middlewares
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+  }),
+);
+
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
@@ -58,7 +65,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`FerreControl API ejecutándose en http://localhost:${PORT}`);
-});
+// Iniciar servidor después de conectar a MongoDB
+const startServer = async () => {
+  await connectDatabase();
+
+  app.listen(PORT, () => {
+    console.log(`FerreControl API ejecutándose en el puerto ${PORT}`);
+  });
+};
+
+startServer();
