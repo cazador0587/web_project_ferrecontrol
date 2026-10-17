@@ -878,3 +878,429 @@ test("getProducts acepta filtros de precio con dos decimales", async () => {
     Product.find = originalFind;
   }
 });
+
+test("createProduct rechaza brand cuando no es texto", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Martillo de acero",
+        description: "Martillo para construcción",
+        sku: "MAR-002",
+        price: 125.5,
+        stock: 10,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        brand: 123,
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza model cuando no es texto", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Taladro eléctrico",
+        description: "Taladro para uso doméstico",
+        sku: "TAL-003",
+        price: 899.99,
+        stock: 8,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        model: true,
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza image cuando no es texto", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Sierra circular",
+        description: "Sierra eléctrica para cortar madera",
+        sku: "SIE-004",
+        price: 1499.99,
+        stock: 6,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        image: 123,
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza specifications cuando no es un arreglo", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Compresor de aire",
+        description: "Compresor para herramientas neumáticas",
+        sku: "COM-005",
+        price: 2499.99,
+        stock: 5,
+        minStock: 1,
+        category: "507f1f77bcf86cd799439011",
+        specifications: "Potencia: 1200 W",
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza elementos de specifications que no son objetos", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Rotomartillo",
+        description: "Rotomartillo para concreto",
+        sku: "ROT-006",
+        price: 1899.99,
+        stock: 7,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        specifications: ["Potencia: 1200 W"],
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza specifications con label que no es texto", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Taladro percutor",
+        description: "Taladro para concreto y mampostería",
+        sku: "TAL-007",
+        price: 1299.99,
+        stock: 8,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        specifications: [
+          {
+            label: 123,
+            value: "1200 W",
+          },
+        ],
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("createProduct rechaza specifications con value que no es texto", async () => {
+  const originalFindOne = Product.findOne;
+
+  try {
+    Product.findOne = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      body: {
+        name: "Sierra circular",
+        description: "Sierra circular para cortes en madera",
+        sku: "SIE-008",
+        price: 2199.99,
+        stock: 6,
+        minStock: 2,
+        category: "507f1f77bcf86cd799439011",
+        specifications: [
+          {
+            label: "Potencia",
+            value: 1200,
+          },
+        ],
+      },
+    };
+
+    const res = createResponse();
+
+    await createProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findOne = originalFindOne;
+  }
+});
+
+test("updateProduct rechaza brand cuando no es texto", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        brand: 123,
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza model cuando no es texto", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        model: 456,
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza image cuando no es texto", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        image: 789,
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza specifications cuando no es un arreglo", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        specifications: "Color: rojo",
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza elementos de specifications que no son objetos", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        specifications: ["Color rojo"],
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza specifications con label que no es texto", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        specifications: [
+          {
+            label: 123,
+            value: "Rojo",
+          },
+        ],
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});
+
+test("updateProduct rechaza specifications con value que no es texto", async () => {
+  const originalFindById = Product.findById;
+
+  try {
+    Product.findById = () => {
+      throw new Error("No debe consultar MongoDB");
+    };
+
+    const req = {
+      params: {
+        id: "507f1f77bcf86cd799439011",
+      },
+      body: {
+        specifications: [
+          {
+            label: "Color",
+            value: 123,
+          },
+        ],
+      },
+    };
+
+    const res = createResponse();
+
+    await updateProduct(req, res);
+
+    assert.equal(res.statusCode, 400);
+  } finally {
+    Product.findById = originalFindById;
+  }
+});

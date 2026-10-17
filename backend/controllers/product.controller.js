@@ -103,6 +103,74 @@ const createProduct = async (req, res) => {
       });
     }
 
+    // Validar el tipo de la marca cuando se proporciona
+    if (brand !== undefined && typeof brand !== "string") {
+      return res.status(400).json({
+        message: "La marca debe ser una cadena de texto",
+      });
+    }
+
+    // Validar el tipo de la imagen cuando se proporciona
+    if (image !== undefined && typeof image !== "string") {
+      return res.status(400).json({
+        message: "La imagen debe ser una cadena de texto",
+      });
+    }
+
+    // Validar que las especificaciones sean un arreglo
+    if (specifications !== undefined && !Array.isArray(specifications)) {
+      return res.status(400).json({
+        message: "Las especificaciones deben ser un arreglo",
+      });
+    }
+
+    // Validar que cada especificación sea un objeto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) =>
+          specification === null ||
+          typeof specification !== "object" ||
+          Array.isArray(specification),
+      )
+    ) {
+      return res.status(400).json({
+        message: "Cada especificación debe ser un objeto válido",
+      });
+    }
+
+    // Validar que cada etiqueta de especificación sea texto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) => typeof specification.label !== "string",
+      )
+    ) {
+      return res.status(400).json({
+        message:
+          "La etiqueta de cada especificación debe ser una cadena de texto",
+      });
+    }
+
+    // Validar que cada valor de especificación sea texto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) => typeof specification.value !== "string",
+      )
+    ) {
+      return res.status(400).json({
+        message: "El valor de cada especificación debe ser una cadena de texto",
+      });
+    }
+
+    // Validar el tipo del modelo cuando se proporciona
+    if (model !== undefined && typeof model !== "string") {
+      return res.status(400).json({
+        message: "El modelo debe ser una cadena de texto",
+      });
+    }
+
     const existingProduct = await Product.findOne({
       sku: normalizedSku,
     });
@@ -330,7 +398,7 @@ const getProductById = async (req, res) => {
 
     const product = await Product.findById(id).populate(
       "category",
-      "name description"
+      "name description",
     );
 
     if (!product) {
@@ -374,6 +442,74 @@ const updateProduct = async (req, res) => {
       image,
       category,
     } = req.body ?? {};
+
+    // Validar el tipo de la marca cuando se proporciona
+    if (brand !== undefined && typeof brand !== "string") {
+      return res.status(400).json({
+        message: "La marca debe ser una cadena de texto",
+      });
+    }
+
+    // Validar el tipo del modelo cuando se proporciona
+    if (model !== undefined && typeof model !== "string") {
+      return res.status(400).json({
+        message: "El modelo debe ser una cadena de texto",
+      });
+    }
+
+    // Validar el tipo de la imagen cuando se proporciona
+    if (image !== undefined && typeof image !== "string") {
+      return res.status(400).json({
+        message: "La imagen debe ser una cadena de texto",
+      });
+    }
+
+    // Validar que las especificaciones sean un arreglo
+    if (specifications !== undefined && !Array.isArray(specifications)) {
+      return res.status(400).json({
+        message: "Las especificaciones deben ser un arreglo",
+      });
+    }
+
+    // Validar que cada especificación sea un objeto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) =>
+          specification === null ||
+          typeof specification !== "object" ||
+          Array.isArray(specification),
+      )
+    ) {
+      return res.status(400).json({
+        message: "Cada especificación debe ser un objeto",
+      });
+    }
+
+    // Validar que label sea una cadena de texto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) => typeof specification.label !== "string",
+      )
+    ) {
+      return res.status(400).json({
+        message:
+          "La etiqueta de cada especificación debe ser una cadena de texto",
+      });
+    }
+
+    //* Validar que value sea una cadena de texto
+    if (
+      specifications !== undefined &&
+      specifications.some(
+        (specification) => typeof specification.value !== "string",
+      )
+    ) {
+      return res.status(400).json({
+        message: "El valor de cada especificación debe ser una cadena de texto",
+      });
+    }
 
     const product = await Product.findById(id);
 
